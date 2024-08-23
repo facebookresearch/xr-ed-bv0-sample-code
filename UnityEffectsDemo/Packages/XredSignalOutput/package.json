@@ -1,0 +1,9 @@
+{
+  "name": "com.xred.signaloutput",
+  "version": "1.0.0",
+  "displayName": "SignalOutput",
+  "description": "SignalOutput Bindings",
+  "dependencies": {
+    "com.meta.xrpa": "1.0.0"
+  }
+}
