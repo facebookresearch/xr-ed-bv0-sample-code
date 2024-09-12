@@ -18,8 +18,8 @@
 
 #pragma warning disable CS0414
 
-using SignalProcessingDataStore;
 using UnityEngine;
+using XrpaDataflow;
 
 public class SimpleWaveComponent : MonoBehaviour {
   [SerializeField]
@@ -51,7 +51,7 @@ public class SimpleWaveComponent : MonoBehaviour {
     }
   }
 
-  private SignalProcessingDataStore.SimpleWave _currentObj;
+  private XrpaDataflow.SimpleWave _currentObj;
 
   void OnValidate() {
     if (_currentObj != null) {
@@ -76,7 +76,7 @@ public class SimpleWaveComponent : MonoBehaviour {
 
   public void Run() {
     Stop();
-    _currentObj = new SignalProcessingDataStore.SimpleWave(SignalProcessingDataStoreSubsystem.Instance.DataStore);
+    _currentObj = new XrpaDataflow.SimpleWave(SignalProcessingDataStoreSubsystem.Instance.DataStore);
     _currentObj.SetAmp(Amp);
     _currentObj.SetFq(Fq);
   }
@@ -88,8 +88,8 @@ public class SimpleWaveComponent : MonoBehaviour {
     _currentObj = null;
   }
 
-  public SignalProcessingDataStore.SimpleWave Spawn() {
-    var ret = new SignalProcessingDataStore.SimpleWave(SignalProcessingDataStoreSubsystem.Instance.DataStore);
+  public XrpaDataflow.SimpleWave Spawn() {
+    var ret = new XrpaDataflow.SimpleWave(SignalProcessingDataStoreSubsystem.Instance.DataStore);
     ret.SetAmp(Amp);
     ret.SetFq(Fq);
     return ret;

@@ -20,8 +20,8 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
-    "@xrpa/xred-signal-output": "~1.3.0",
-    "@xrpa/xred-signal-processing": "~1.3.0",
-    "@xrpa/xrpa-orchestrator": "~1.3.0"
+    "@xrpa/xred-signal-output": "^1.4.0",
+    "@xrpa/xred-signal-processing": "^1.4.0",
+    "@xrpa/xrpa-orchestrator": "^1.4.0"
   }
 }

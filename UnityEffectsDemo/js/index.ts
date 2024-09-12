@@ -6,15 +6,17 @@
  */
 
 import path from "path";
-import { XredSignalOutput } from "@xrpa/xred-signal-output";
-import { XredSignalProcessing } from "@xrpa/xred-signal-processing";
-import { UnityProject } from "@xrpa/xrpa-orchestrator";
+import { XredSignalOutputInterface } from "@xrpa/xred-signal-output";
+import { UnityProject, bindExternalProgram } from "@xrpa/xrpa-orchestrator";
 
 import { UnityEffects } from "./effects";
 
-UnityProject(path.join(__dirname, ".."), unity => {
-  unity.addBindings(XredSignalOutput);
-  unity.addBindings(XredSignalProcessing, { effects: UnityEffects });
+UnityProject(path.join(__dirname, ".."), "UnityEffectsDemo", () => {
+  bindExternalProgram(XredSignalOutputInterface);
+
+  for (const effect of UnityEffects) {
+    bindExternalProgram(effect);
+  }
 }).catch((e) => {
   console.error(e);
   process.exit(1);

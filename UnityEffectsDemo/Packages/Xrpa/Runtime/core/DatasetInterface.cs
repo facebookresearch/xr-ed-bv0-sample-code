@@ -15,16 +15,18 @@
  * limitations under the License.
  */
 
-namespace Xrpa {
+namespace Xrpa
+{
 
-  public abstract class DatasetInterface : System.IDisposable {
-    public abstract void Dispose();
+    public abstract class DatasetInterface : System.IDisposable
+    {
+        public abstract void Dispose();
 
-    public abstract bool CheckSchemaHash(DSHashValue schemaHash);
-    public abstract ulong GetBaseTimestamp();
-    public abstract int GetLastChangelogID();
-    public abstract int GetLastMessageID();
-    public abstract bool Acquire(int timeoutMS, System.Action<DatasetAccessor> func);
-  }
+        public abstract bool CheckSchemaHash(DSHashValue schemaHash);
+        public abstract ulong GetBaseTimestamp();
+        public abstract int GetLastChangelogID();
+        public abstract int GetLastMessageID();
+        public abstract bool Acquire(int timeoutMS, System.Action<DatasetAccessor> func);
+    }
 
 }

@@ -18,8 +18,8 @@
 
 #pragma warning disable CS0414
 
-using SignalProcessingDataStore;
 using UnityEngine;
+using XrpaDataflow;
 
 public class PulsePatternComponent : MonoBehaviour {
   [SerializeField]
@@ -65,6 +65,32 @@ public class PulsePatternComponent : MonoBehaviour {
   }
 
   [SerializeField]
+  private float _SawAmp = 1f;
+
+  public float SawAmp {
+    get => _SawAmp;
+    set {
+      _SawAmp = value;
+      if (_currentObj != null) {
+        _currentObj.SetSawAmp(value);
+      }
+    }
+  }
+
+  [SerializeField]
+  private float _SinAmp = 1f;
+
+  public float SinAmp {
+    get => _SinAmp;
+    set {
+      _SinAmp = value;
+      if (_currentObj != null) {
+        _currentObj.SetSinAmp(value);
+      }
+    }
+  }
+
+  [SerializeField]
   private float _SquareAmp = 1f;
 
   public float SquareAmp {
@@ -77,7 +103,20 @@ public class PulsePatternComponent : MonoBehaviour {
     }
   }
 
-  private SignalProcessingDataStore.PulsePattern _currentObj;
+  [SerializeField]
+  private float _TriAmp = 1f;
+
+  public float TriAmp {
+    get => _TriAmp;
+    set {
+      _TriAmp = value;
+      if (_currentObj != null) {
+        _currentObj.SetTriAmp(value);
+      }
+    }
+  }
+
+  private XrpaDataflow.PulsePattern _currentObj;
 
   void OnValidate() {
     if (_currentObj != null) {
@@ -90,8 +129,17 @@ public class PulsePatternComponent : MonoBehaviour {
       if (!_currentObj.GetPulseDuration().Equals(_PulseDuration)) {
         _currentObj.SetPulseDuration(_PulseDuration);
       }
+      if (!_currentObj.GetSawAmp().Equals(_SawAmp)) {
+        _currentObj.SetSawAmp(_SawAmp);
+      }
+      if (!_currentObj.GetSinAmp().Equals(_SinAmp)) {
+        _currentObj.SetSinAmp(_SinAmp);
+      }
       if (!_currentObj.GetSquareAmp().Equals(_SquareAmp)) {
         _currentObj.SetSquareAmp(_SquareAmp);
+      }
+      if (!_currentObj.GetTriAmp().Equals(_TriAmp)) {
+        _currentObj.SetTriAmp(_TriAmp);
       }
     }
   }
@@ -108,11 +156,14 @@ public class PulsePatternComponent : MonoBehaviour {
 
   public void Run() {
     Stop();
-    _currentObj = new SignalProcessingDataStore.PulsePattern(SignalProcessingDataStoreSubsystem.Instance.DataStore);
+    _currentObj = new XrpaDataflow.PulsePattern(SignalProcessingDataStoreSubsystem.Instance.DataStore);
     _currentObj.SetFq(Fq);
     _currentObj.SetPauseDuration(PauseDuration);
     _currentObj.SetPulseDuration(PulseDuration);
+    _currentObj.SetSawAmp(SawAmp);
+    _currentObj.SetSinAmp(SinAmp);
     _currentObj.SetSquareAmp(SquareAmp);
+    _currentObj.SetTriAmp(TriAmp);
   }
 
   public void Stop() {
@@ -122,12 +173,15 @@ public class PulsePatternComponent : MonoBehaviour {
     _currentObj = null;
   }
 
-  public SignalProcessingDataStore.PulsePattern Spawn() {
-    var ret = new SignalProcessingDataStore.PulsePattern(SignalProcessingDataStoreSubsystem.Instance.DataStore);
+  public XrpaDataflow.PulsePattern Spawn() {
+    var ret = new XrpaDataflow.PulsePattern(SignalProcessingDataStoreSubsystem.Instance.DataStore);
     ret.SetFq(Fq);
     ret.SetPauseDuration(PauseDuration);
     ret.SetPulseDuration(PulseDuration);
+    ret.SetSawAmp(SawAmp);
+    ret.SetSinAmp(SinAmp);
     ret.SetSquareAmp(SquareAmp);
+    ret.SetTriAmp(TriAmp);
     return ret;
   }
 }

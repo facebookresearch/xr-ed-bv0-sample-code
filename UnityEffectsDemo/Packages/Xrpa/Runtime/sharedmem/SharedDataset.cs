@@ -17,114 +17,139 @@
 
 using System.Runtime.InteropServices;
 
-namespace Xrpa {
+namespace Xrpa
+{
 
-  unsafe public class SharedDataset : DatasetInterface {
-    public SharedDataset(string name, DatasetConfig config) {
-      _datasetName = name;
-      _datasetConfig = config;
-      _memoryBlock = new();
-    }
-
-    public override void Dispose() {
-      if (_memoryBlock != null) {
-        _memoryBlock.Dispose();
-        _memoryBlock = null;
-      }
-    }
-
-    public bool Initialize() {
-      int totalBytes = DatasetAccessor.GetTotalBytes(_datasetConfig);
-
-      _isInitialized = false;
-      bool didCreate = _memoryBlock.OpenMemory(_datasetName, totalBytes);
-
-      if (didCreate) {
-        bool didLock = Acquire(5000, accessor => accessor.InitContents(_datasetConfig));
-        if (!didLock) {
-          return false;
+    unsafe public class SharedDataset : DatasetInterface
+    {
+        public SharedDataset(string name, DatasetConfig config)
+        {
+            _datasetName = name;
+            _datasetConfig = config;
+            _memoryBlock = new();
         }
-      } else {
-        // lock-free version check against the dataset's metadata
-        var memAccessor = _memoryBlock.AcquireUnsafeAccess();
-        if (memAccessor == null || !DatasetAccessor.VersionCheck(memAccessor, _datasetConfig)) {
-          // TODO log a warning for the version mismatch? it isn't a hard failure but it will be
-          // confusing without a log message
-          _memoryBlock.ReleaseUnsafeAccess();
-          return false;
+
+        public override void Dispose()
+        {
+            if (_memoryBlock != null)
+            {
+                _memoryBlock.Dispose();
+                _memoryBlock = null;
+            }
         }
-        _memoryBlock.ReleaseUnsafeAccess();
-      }
-      _isInitialized = true;
-      return true;
-    }
 
-    public override bool CheckSchemaHash(DSHashValue schemaHash) {
-      var memAccessor = _memoryBlock?.AcquireUnsafeAccess();
-      if (memAccessor == null) {
-        return false;
-      }
-      DSHeader header = new(memAccessor);
-      bool ret = header.SchemaHash == schemaHash;
-      _memoryBlock.ReleaseUnsafeAccess();
-      return ret;
-    }
+        public bool Initialize()
+        {
+            int totalBytes = DatasetAccessor.GetTotalBytes(_datasetConfig);
 
-    public override ulong GetBaseTimestamp() {
-      var memAccessor = _memoryBlock?.AcquireUnsafeAccess();
-      if (memAccessor == null) {
-        return 0;
-      }
-      DSHeader header = new(memAccessor);
-      ulong ret = header.BaseTimestamp;
-      _memoryBlock.ReleaseUnsafeAccess();
-      return ret;
-    }
+            _isInitialized = false;
+            bool didCreate = _memoryBlock.OpenMemory(_datasetName, totalBytes);
 
-    public override int GetLastChangelogID() {
-      var memAccessor = _memoryBlock?.AcquireUnsafeAccess();
-      if (memAccessor == null) {
-        return 0;
-      }
-      DSHeader header = new(memAccessor);
-      int ret = header.LastChangelogID;
-      _memoryBlock.ReleaseUnsafeAccess();
-      return ret;
-    }
-
-    public override int GetLastMessageID() {
-      var memAccessor = _memoryBlock?.AcquireUnsafeAccess();
-      if (memAccessor == null) {
-        return 0;
-      }
-      DSHeader header = new(memAccessor);
-      int ret = header.LastMessageID;
-      _memoryBlock.ReleaseUnsafeAccess();
-      return ret;
-    }
-
-    public override bool Acquire(int timeoutMS, System.Action<DatasetAccessor> func) {
-      if (_memoryBlock == null) {
-        return false;
-      }
-      if (!_memoryBlock.IsOpen()) {
-        Initialize();
-      }
-      using (MutexLockedAccessor lockedMemView = _memoryBlock.Acquire(timeoutMS)) {
-        if (lockedMemView == null) {
-          return false;
+            if (didCreate)
+            {
+                bool didLock = Acquire(5000, accessor => accessor.InitContents(_datasetConfig));
+                if (!didLock)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                // lock-free version check against the dataset's metadata
+                var memAccessor = _memoryBlock.AcquireUnsafeAccess();
+                if (memAccessor == null || !DatasetAccessor.VersionCheck(memAccessor, _datasetConfig))
+                {
+                    // TODO log a warning for the version mismatch? it isn't a hard failure but it will be
+                    // confusing without a log message
+                    _memoryBlock.ReleaseUnsafeAccess();
+                    return false;
+                }
+                _memoryBlock.ReleaseUnsafeAccess();
+            }
+            _isInitialized = true;
+            return true;
         }
-        using (var accessor = new DatasetAccessor(lockedMemView.Memory, !_isInitialized)) {
-          func(accessor);
-        }
-        return true;
-      }
-    }
 
-    private readonly string _datasetName;
-    private readonly DatasetConfig _datasetConfig;
-    private SharedMemoryBlock _memoryBlock;
-    private bool _isInitialized = false;
-  }
+        public override bool CheckSchemaHash(DSHashValue schemaHash)
+        {
+            var memAccessor = _memoryBlock?.AcquireUnsafeAccess();
+            if (memAccessor == null)
+            {
+                return false;
+            }
+            DSHeader header = new(memAccessor);
+            bool ret = header.SchemaHash == schemaHash;
+            _memoryBlock.ReleaseUnsafeAccess();
+            return ret;
+        }
+
+        public override ulong GetBaseTimestamp()
+        {
+            var memAccessor = _memoryBlock?.AcquireUnsafeAccess();
+            if (memAccessor == null)
+            {
+                return 0;
+            }
+            DSHeader header = new(memAccessor);
+            ulong ret = header.BaseTimestamp;
+            _memoryBlock.ReleaseUnsafeAccess();
+            return ret;
+        }
+
+        public override int GetLastChangelogID()
+        {
+            var memAccessor = _memoryBlock?.AcquireUnsafeAccess();
+            if (memAccessor == null)
+            {
+                return 0;
+            }
+            DSHeader header = new(memAccessor);
+            int ret = header.LastChangelogID;
+            _memoryBlock.ReleaseUnsafeAccess();
+            return ret;
+        }
+
+        public override int GetLastMessageID()
+        {
+            var memAccessor = _memoryBlock?.AcquireUnsafeAccess();
+            if (memAccessor == null)
+            {
+                return 0;
+            }
+            DSHeader header = new(memAccessor);
+            int ret = header.LastMessageID;
+            _memoryBlock.ReleaseUnsafeAccess();
+            return ret;
+        }
+
+        public override bool Acquire(int timeoutMS, System.Action<DatasetAccessor> func)
+        {
+            if (_memoryBlock == null)
+            {
+                return false;
+            }
+            if (!_memoryBlock.IsOpen())
+            {
+                Initialize();
+            }
+            using (MutexLockedAccessor lockedMemView = _memoryBlock.Acquire(timeoutMS))
+            {
+                if (lockedMemView == null)
+                {
+                    return false;
+                }
+                using (var accessor = new DatasetAccessor(lockedMemView.Memory, !_isInitialized))
+                {
+                    func(accessor);
+                }
+                return true;
+            }
+        }
+
+        private readonly string _datasetName;
+        private readonly DatasetConfig _datasetConfig;
+        private SharedMemoryBlock _memoryBlock;
+        private bool _isInitialized = false;
+    }
 
 }

@@ -20,19 +20,19 @@ using UnityEngine;
 using Xrpa;
 
 [AddComponentMenu("")]
-public class XredSignalProcessingModuleSubsystem : MonoBehaviour {
-  private static XredSignalProcessingModuleSubsystem _Instance;
+public class SignalProcessingTransportSubsystem : MonoBehaviour {
+  private static SignalProcessingTransportSubsystem _Instance;
 
-  public static XredSignalProcessingModuleSubsystem MaybeInstance { get => _Instance; }
+  public static SignalProcessingTransportSubsystem MaybeInstance { get => _Instance; }
 
-  public static XredSignalProcessingModuleSubsystem Instance {
+  public static SignalProcessingTransportSubsystem Instance {
     get {
       if (_Instance == null) {
-        _Instance = FindObjectOfType<XredSignalProcessingModuleSubsystem>();
+        _Instance = FindObjectOfType<SignalProcessingTransportSubsystem>();
       }
       if (_Instance == null) {
-        GameObject obj = new() { name = typeof(XredSignalProcessingModuleSubsystem).Name };
-        _Instance = obj.AddComponent<XredSignalProcessingModuleSubsystem>();
+        GameObject obj = new() { name = typeof(SignalProcessingTransportSubsystem).Name };
+        _Instance = obj.AddComponent<SignalProcessingTransportSubsystem>();
       }
       return _Instance;
     }
@@ -43,9 +43,9 @@ public class XredSignalProcessingModuleSubsystem : MonoBehaviour {
       _Instance = this;
       DontDestroyOnLoad(gameObject);
       {
-        var localXredSignalProcessingSignalProcessingDataset = new Xrpa.SharedDataset("SignalProcessing", SignalProcessingDataStore.SignalProcessingDataStoreConfig.GenDatasetConfig());
-        localXredSignalProcessingSignalProcessingDataset.Initialize();
-        XredSignalProcessingSignalProcessingDataset = localXredSignalProcessingSignalProcessingDataset;
+        var localSignalProcessingDataset = new Xrpa.SharedDataset("SignalProcessing", SignalProcessingDataStore.SignalProcessingDataStoreConfig.GenDatasetConfig());
+        localSignalProcessingDataset.Initialize();
+        SignalProcessingDataset = localSignalProcessingDataset;
       }
     } else if (_Instance != this) {
       Destroy(gameObject);
@@ -54,12 +54,12 @@ public class XredSignalProcessingModuleSubsystem : MonoBehaviour {
 
   void OnDestroy() {
     SignalProcessingDataStoreSubsystem.MaybeInstance?.Shutdown();
-    XredSignalProcessingSignalProcessingDataset?.Dispose();
-    XredSignalProcessingSignalProcessingDataset = null;
+    SignalProcessingDataset?.Dispose();
+    SignalProcessingDataset = null;
     if (_Instance == this) {
       _Instance = null;
     }
   }
 
-  public Xrpa.DatasetInterface XredSignalProcessingSignalProcessingDataset;
+  public Xrpa.DatasetInterface SignalProcessingDataset;
 }

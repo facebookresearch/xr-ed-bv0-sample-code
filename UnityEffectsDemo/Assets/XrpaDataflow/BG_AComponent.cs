@@ -18,38 +18,12 @@
 
 #pragma warning disable CS0414
 
-using SignalProcessingDataStore;
 using UnityEngine;
+using XrpaDataflow;
 
-public class Pulse_CComponent : MonoBehaviour {
+public class BG_AComponent : MonoBehaviour {
   [SerializeField]
   public bool AutoRun = false;
-
-  [SerializeField]
-  private float _FundamentalAmp = 1f;
-
-  public float FundamentalAmp {
-    get => _FundamentalAmp;
-    set {
-      _FundamentalAmp = value;
-      if (_currentObj != null) {
-        _currentObj.SetFundamentalAmp(value);
-      }
-    }
-  }
-
-  [SerializeField]
-  private float _FundamentalFq = 350f;
-
-  public float FundamentalFq {
-    get => _FundamentalFq;
-    set {
-      _FundamentalFq = value;
-      if (_currentObj != null) {
-        _currentObj.SetFundamentalFq(value);
-      }
-    }
-  }
 
   [SerializeField]
   private float _Gain0 = 1f;
@@ -116,16 +90,10 @@ public class Pulse_CComponent : MonoBehaviour {
     }
   }
 
-  private SignalProcessingDataStore.Pulse_C _currentObj;
+  private XrpaDataflow.BG_A _currentObj;
 
   void OnValidate() {
     if (_currentObj != null) {
-      if (!_currentObj.GetFundamentalAmp().Equals(_FundamentalAmp)) {
-        _currentObj.SetFundamentalAmp(_FundamentalAmp);
-      }
-      if (!_currentObj.GetFundamentalFq().Equals(_FundamentalFq)) {
-        _currentObj.SetFundamentalFq(_FundamentalFq);
-      }
       if (!_currentObj.GetGain0().Equals(_Gain0)) {
         _currentObj.SetGain0(_Gain0);
       }
@@ -156,9 +124,7 @@ public class Pulse_CComponent : MonoBehaviour {
 
   public void Run() {
     Stop();
-    _currentObj = new SignalProcessingDataStore.Pulse_C(SignalProcessingDataStoreSubsystem.Instance.DataStore);
-    _currentObj.SetFundamentalAmp(FundamentalAmp);
-    _currentObj.SetFundamentalFq(FundamentalFq);
+    _currentObj = new XrpaDataflow.BG_A(SignalProcessingDataStoreSubsystem.Instance.DataStore);
     _currentObj.SetGain0(Gain0);
     _currentObj.SetGain1(Gain1);
     _currentObj.SetGain2(Gain2);
@@ -173,10 +139,8 @@ public class Pulse_CComponent : MonoBehaviour {
     _currentObj = null;
   }
 
-  public SignalProcessingDataStore.Pulse_C Spawn() {
-    var ret = new SignalProcessingDataStore.Pulse_C(SignalProcessingDataStoreSubsystem.Instance.DataStore);
-    ret.SetFundamentalAmp(FundamentalAmp);
-    ret.SetFundamentalFq(FundamentalFq);
+  public XrpaDataflow.BG_A Spawn() {
+    var ret = new XrpaDataflow.BG_A(SignalProcessingDataStoreSubsystem.Instance.DataStore);
     ret.SetGain0(Gain0);
     ret.SetGain1(Gain1);
     ret.SetGain2(Gain2);

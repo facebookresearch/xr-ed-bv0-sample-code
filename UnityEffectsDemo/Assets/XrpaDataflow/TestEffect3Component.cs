@@ -18,13 +18,13 @@
 
 #pragma warning disable CS0414
 
-using SignalProcessingDataStore;
 using UnityEngine;
+using XrpaDataflow;
 
 public class TestEffect3Component : MonoBehaviour {
   [SerializeField]
   public bool AutoRun = false;
-  private SignalProcessingDataStore.TestEffect3 _currentObj;
+  private XrpaDataflow.TestEffect3 _currentObj;
 
   void OnValidate() {
     if (_currentObj != null) {
@@ -43,7 +43,7 @@ public class TestEffect3Component : MonoBehaviour {
 
   public void Run() {
     Stop();
-    _currentObj = new SignalProcessingDataStore.TestEffect3(SignalProcessingDataStoreSubsystem.Instance.DataStore);
+    _currentObj = new XrpaDataflow.TestEffect3(SignalProcessingDataStoreSubsystem.Instance.DataStore);
   }
 
   public void Stop() {
@@ -53,8 +53,8 @@ public class TestEffect3Component : MonoBehaviour {
     _currentObj = null;
   }
 
-  public SignalProcessingDataStore.TestEffect3 Spawn() {
-    var ret = new SignalProcessingDataStore.TestEffect3(SignalProcessingDataStoreSubsystem.Instance.DataStore);
+  public XrpaDataflow.TestEffect3 Spawn() {
+    var ret = new XrpaDataflow.TestEffect3(SignalProcessingDataStoreSubsystem.Instance.DataStore);
     return ret;
   }
 }

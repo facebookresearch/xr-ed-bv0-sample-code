@@ -17,21 +17,25 @@
 
 using System.Runtime.InteropServices;
 
-namespace Xrpa {
+namespace Xrpa
+{
 
-  unsafe public class AllocatedMemory : System.IDisposable {
-    public AllocatedMemory(int size) {
-      _memHandle = Marshal.AllocHGlobal(size);
-      Accessor = new MemoryAccessor((byte*)_memHandle, 0, size);
+    unsafe public class AllocatedMemory : System.IDisposable
+    {
+        public AllocatedMemory(int size)
+        {
+            _memHandle = Marshal.AllocHGlobal(size);
+            Accessor = new MemoryAccessor((byte*)_memHandle, 0, size);
+        }
+
+        public void Dispose()
+        {
+            Marshal.FreeHGlobal(_memHandle);
+        }
+
+        public MemoryAccessor Accessor { get; }
+
+        private System.IntPtr _memHandle;
     }
-
-    public void Dispose() {
-      Marshal.FreeHGlobal(_memHandle);
-    }
-
-    public MemoryAccessor Accessor { get; }
-
-    private System.IntPtr _memHandle;
-  }
 
 }

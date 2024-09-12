@@ -41,7 +41,7 @@ public class SignalProcessingDataStoreSubsystem : MonoBehaviour {
     if (_Instance == null) {
       _Instance = this;
       DontDestroyOnLoad(gameObject);
-      DataStore = new SignalProcessingDataStore.SignalProcessingDataStore(XredSignalProcessingModuleSubsystem.Instance.XredSignalProcessingSignalProcessingDataset);
+      DataStore = new SignalProcessingDataStore.SignalProcessingDataStore(SignalProcessingTransportSubsystem.Instance.SignalProcessingDataset);
     } else if (_Instance != this) {
       Destroy(gameObject);
     }

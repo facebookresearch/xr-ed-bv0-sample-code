@@ -14,16 +14,15 @@ import {
   HighPassFilter,
   LowPassFilter,
   MultiplyAdd,
-  OutputDevice,
-  SignalGraph,
+  OutputToDevice,
   strContains,
 } from "@xrpa/xred-signal-processing";
+import { XrpaDataflowProgram } from "@xrpa/xrpa-orchestrator";
 
-// NOTE: this effect will not do anything at the moment, as XredOutput does not support audio devices yet.
-// Also the test.wav file is not included in the repo, so this will not work.
+// NOTE: this effect will not do anything at the moment, as the test.wav file is not included in the repo.
 // I am leaving this here anyway, as it is a good example of how to use the AudioStream and filter nodes.
 
-export function TestEffect3(): SignalGraph {
+export const TestEffect3 = XrpaDataflowProgram("TestEffect3", () => {
   // load the audio file
   const audioWaveform = AudioStream(
     path.resolve(__dirname, ".", "test.wav"),
@@ -37,13 +36,8 @@ export function TestEffect3(): SignalGraph {
   const outputSignal = MultiplyAdd(feedback, 0.25, HighPassFilter(audioWaveform, 1000));
   feedback.setSource(Delay(LowPassFilter(outputSignal, 500), 250));
 
-  return new SignalGraph({
-    // output the signal to the headphones (does not currently work with XredOutput)
-    outputs: [
-      OutputDevice({
-        deviceName: strContains("Headphones"),
-        source: outputSignal,
-      }),
-    ],
+  OutputToDevice({
+    deviceName: strContains("Headphones"),
+    source: outputSignal,
   });
-}
+});

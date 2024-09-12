@@ -7,40 +7,35 @@
 
 import {
   Multiply,
-  OutputDevice,
-  ScalarParam,
-  SignalGraph,
   SineWave,
   TriangleWave,
   StackChannels,
   strContains,
+  OutputToDevice,
 } from "@xrpa/xred-signal-processing";
+import { ProgramInput, Scalar, XrpaDataflowProgram } from "@xrpa/xrpa-orchestrator";
 
-export function BG_C(): SignalGraph {
+export const BG_C = XrpaDataflowProgram("BG_C", () => {
 
-    const gain0 = ScalarParam("Gain0", 1);
-    const gain1 = ScalarParam("Gain1", 1);
-    const gain2 = ScalarParam("Gain2", 1);
-    const gain3 = ScalarParam("Gain3", 1);
-    const gain4 = ScalarParam("Gain4", 1);
+  const gain0 = ProgramInput("Gain0", Scalar(1));
+  const gain1 = ProgramInput("Gain1", Scalar(1));
+  const gain2 = ProgramInput("Gain2", Scalar(1));
+  const gain3 = ProgramInput("Gain3", Scalar(1));
+  const gain4 = ProgramInput("Gain4", Scalar(1));
 
-    // Construct the waveform by multiplying fundamental and LFO frequencies
-    const fundamental = TriangleWave({ frequency: 350, amplitude: .2 });
-    const lfo = SineWave({ frequency: 2, amplitude: 1 });
-    const waveform = Multiply(fundamental, lfo);
+  // Construct the waveform by multiplying fundamental and LFO frequencies
+  const fundamental = TriangleWave({ frequency: 350, amplitude: .2 });
+  const lfo = SineWave({ frequency: 2, amplitude: 1 });
+  const waveform = Multiply(fundamental, lfo);
 
-  return new SignalGraph({
-      outputs: [
-          OutputDevice({
-              deviceName: strContains("HDK-1"),
-              source: StackChannels(
-                  Multiply(waveform, gain0),
-                  Multiply(waveform, gain1),
-                  Multiply(waveform, gain2),
-                  Multiply(waveform, gain3),
-                  Multiply(waveform, gain4),
-              ),
-          }),
-      ],
+  OutputToDevice({
+    deviceName: strContains("HDK-1"),
+    source: StackChannels(
+      Multiply(waveform, gain0),
+      Multiply(waveform, gain1),
+      Multiply(waveform, gain2),
+      Multiply(waveform, gain3),
+      Multiply(waveform, gain4),
+    ),
   });
-}
+});

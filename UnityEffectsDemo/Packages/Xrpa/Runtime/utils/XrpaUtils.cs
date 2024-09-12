@@ -17,23 +17,29 @@
 
 using System;
 
-namespace Xrpa {
+namespace Xrpa
+{
 
-  public class XrpaUtils {
-    public static void BoundsAssert(int accessStart, int accessSize, int minRange, int maxRange) {
-      int accessEnd = accessStart + accessSize;
-      if (accessSize < 0 || accessStart < minRange || accessEnd > maxRange) {
-        throw new System.Exception(
-            "Memory access violation: [" + accessStart + ", " + accessEnd +
-            "] reaches outside of range [" + minRange + ", " + maxRange + "]");
-      }
-    }
+    public class XrpaUtils
+    {
+        public static void BoundsAssert(int accessStart, int accessSize, int minRange, int maxRange)
+        {
+            int accessEnd = accessStart + accessSize;
+            if (accessSize < 0 || accessStart < minRange || accessEnd > maxRange)
+            {
+                throw new System.Exception(
+                    "Memory access violation: [" + accessStart + ", " + accessEnd +
+                    "] reaches outside of range [" + minRange + ", " + maxRange + "]");
+            }
+        }
 
-    public static void DebugAssert(bool condition, string message = "Assertion failed") {
-      if (!condition) {
-        throw new System.Exception(message);
-      }
+        public static void DebugAssert(bool condition, string message = "Assertion failed")
+        {
+            if (!condition)
+            {
+                throw new System.Exception(message);
+            }
+        }
     }
-  }
 
 }

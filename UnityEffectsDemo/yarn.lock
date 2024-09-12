@@ -218,22 +218,23 @@
     "@typescript-eslint/types" "5.62.0"
     eslint-visitor-keys "^3.3.0"
 
-"@xrpa/xred-signal-output@~1.3.0":
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/@xrpa/xred-signal-output/-/xred-signal-output-1.3.2.tgz#8c33db178bde128e68c90e25065e12f0ff69c6d7"
-  integrity sha512-vVxqE/0Yp0sQ7Tk6RsMEXFuJRMZq0ttXhMfqBBnwKcYtZDBkbisuPpzx7ItXPQ1taj53w130/1AaeNqw/ipdFQ==
+"@xrpa/xred-signal-output@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@xrpa/xred-signal-output/-/xred-signal-output-1.4.0.tgz#3eff953cb7b3859c13b01e48e319e430c3314159"
+  integrity sha512-cxXqHDTnVbvgVvsLaczkR4BWU6cacxR/CUtbh3zIe80E4d9xzOyz3XyPOhi3wZy4uodGEfmb0HEFe2pMYcCZCA==
 
-"@xrpa/xred-signal-processing@~1.3.0":
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/@xrpa/xred-signal-processing/-/xred-signal-processing-1.3.1.tgz#60b15840052826b0e17b4d71ffb4349f0c6aeaec"
-  integrity sha512-kZT36IIEoQqScBakITEIlwloQDuVMEYqlK8hFCGeQIjqT4dZlCQIi7IMC9Y/PJabU6AXOitKoOKc3e0wpdZllQ==
+"@xrpa/xred-signal-processing@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@xrpa/xred-signal-processing/-/xred-signal-processing-1.4.0.tgz#a2a92ae5278bfe50fdb69a41b30585b7029c1d0f"
+  integrity sha512-3sdRqO0vBoR97IsU7gVfkxlGTWaW/VB6/W2uW1oQiAeiGwFak5JhXPVZIS+MfKwmpBhigbKHQhXevjXmoCtbzA==
 
-"@xrpa/xrpa-orchestrator@~1.3.0":
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/@xrpa/xrpa-orchestrator/-/xrpa-orchestrator-1.3.3.tgz#04e44b3574d74c6ee7a23f48b6517cd70d92cace"
-  integrity sha512-KDQeRGOYjJ+vNWXXaviiPnSwSP0zmjFWV4P25etwLwsLrhBOufZIqQBI1bsRFbQkr9gLocR+iYQgfnhuGZMP/Q==
+"@xrpa/xrpa-orchestrator@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@xrpa/xrpa-orchestrator/-/xrpa-orchestrator-1.4.0.tgz#041cc758424d8516fa0778f4d93fff0b659e4ffd"
+  integrity sha512-yKyZY6lYjBCwcv+sov4b7zJ7DPpl6xXbwQhqaILgbE5jt10b/4cfxMe+uYmhzzER5FCFnNDFMkuzjf3fLhsqzQ==
   dependencies:
     fs-extra "^11.1.0"
+    simply-immutable "^2.1.1"
 
 acorn-jsx@^5.3.2:
   version "5.3.2"
@@ -1583,6 +1584,11 @@ side-channel@^1.0.4:
     es-errors "^1.3.0"
     get-intrinsic "^1.2.4"
     object-inspect "^1.13.1"
+
+simply-immutable@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/simply-immutable/-/simply-immutable-2.1.1.tgz#669eabc183a4bb4303421a73176d1a92ebac6a69"
+  integrity sha512-PgpPqfLV0SUvB3SP55vIVnYbXa4eonT4iy211OBoJpI0vvdXvgN5zgGB7bS79bfgDsMMLPH88ZBHd1Hg+jlanw==
 
 slash@^3.0.0:
   version "3.0.0"

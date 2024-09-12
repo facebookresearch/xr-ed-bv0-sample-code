@@ -17,50 +17,63 @@
 
 using System.Collections.Generic;
 
-namespace Xrpa {
+namespace Xrpa
+{
 
-  public class ObjectCollectionIndex<ObjectAccessorType, ReconciledType, IndexFieldType>
-    where ObjectAccessorType : ObjectAccessorInterface, new()
-    where ReconciledType : class, IDataStoreObjectAccessor<ObjectAccessorType>
-    where IndexFieldType : System.IEquatable<IndexFieldType> {
+    public class ObjectCollectionIndex<ObjectAccessorType, ReconciledType, IndexFieldType>
+      where ObjectAccessorType : ObjectAccessorInterface, new()
+      where ReconciledType : class, IDataStoreObjectAccessor<ObjectAccessorType>
+      where IndexFieldType : System.IEquatable<IndexFieldType>
+    {
 
-    public List<ReconciledType> GetIndexedObjects(IndexFieldType indexValue) {
-      if (_objectIndex.TryGetValue(indexValue, out var objList)) {
-        return objList;
-      }
-      return _emptyList;
-    }
-
-    public virtual void OnCreate(ReconciledType obj, IndexFieldType indexValue) {
-      _valueMap[obj.GetXrpaId()] = indexValue;
-      if (_objectIndex.TryGetValue(indexValue, out var objList)) {
-        objList.Add(obj);
-      } else {
-        _objectIndex[indexValue] = new List<ReconciledType>() { obj };
-      }
-    }
-
-    public virtual void OnDelete(ReconciledType obj, IndexFieldType indexValue) {
-      _valueMap.Remove(obj.GetXrpaId());
-      if (_objectIndex.TryGetValue(indexValue, out var objList)) {
-        objList.Remove(obj);
-        if (objList.Count == 0) {
-          _objectIndex.Remove(indexValue);
+        public List<ReconciledType> GetIndexedObjects(IndexFieldType indexValue)
+        {
+            if (_objectIndex.TryGetValue(indexValue, out var objList))
+            {
+                return objList;
+            }
+            return _emptyList;
         }
-      }
-    }
 
-    public virtual void OnUpdate(ReconciledType obj, IndexFieldType newIndexValue) {
-      var oldIndexValue = _valueMap[obj.GetXrpaId()];
-      if (!oldIndexValue.Equals(newIndexValue)) {
-        OnDelete(obj, oldIndexValue);
-        OnCreate(obj, newIndexValue);
-      }
-    }
+        public virtual void OnCreate(ReconciledType obj, IndexFieldType indexValue)
+        {
+            _valueMap[obj.GetXrpaId()] = indexValue;
+            if (_objectIndex.TryGetValue(indexValue, out var objList))
+            {
+                objList.Add(obj);
+            }
+            else
+            {
+                _objectIndex[indexValue] = new List<ReconciledType>() { obj };
+            }
+        }
 
-    protected Dictionary<DSIdentifier, IndexFieldType> _valueMap = new();
-    protected Dictionary<IndexFieldType, List<ReconciledType>> _objectIndex = new();
-    protected List<ReconciledType> _emptyList = new();
-  }
+        public virtual void OnDelete(ReconciledType obj, IndexFieldType indexValue)
+        {
+            _valueMap.Remove(obj.GetXrpaId());
+            if (_objectIndex.TryGetValue(indexValue, out var objList))
+            {
+                objList.Remove(obj);
+                if (objList.Count == 0)
+                {
+                    _objectIndex.Remove(indexValue);
+                }
+            }
+        }
+
+        public virtual void OnUpdate(ReconciledType obj, IndexFieldType newIndexValue)
+        {
+            var oldIndexValue = _valueMap[obj.GetXrpaId()];
+            if (!oldIndexValue.Equals(newIndexValue))
+            {
+                OnDelete(obj, oldIndexValue);
+                OnCreate(obj, newIndexValue);
+            }
+        }
+
+        protected Dictionary<DSIdentifier, IndexFieldType> _valueMap = new();
+        protected Dictionary<IndexFieldType, List<ReconciledType>> _objectIndex = new();
+        protected List<ReconciledType> _emptyList = new();
+    }
 
 }

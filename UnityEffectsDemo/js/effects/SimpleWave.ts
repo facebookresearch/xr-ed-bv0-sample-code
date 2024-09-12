@@ -6,27 +6,21 @@
  */
 
 import {
-  OutputDevice,
-  ScalarParam,
-  SignalGraph,
+  OutputToDevice,
   SineWave,
   strContains,
 } from "@xrpa/xred-signal-processing";
+import { ProgramInput, Scalar, XrpaDataflowProgram } from "@xrpa/xrpa-orchestrator";
 
-export function SimpleWave(): SignalGraph {
-    const fq = ScalarParam("Fq", 170);
-    const amp = ScalarParam("Amp", 1);
+export const SimpleWave = XrpaDataflowProgram("SimpleWave", () => {
+  const fq = ProgramInput("Fq", Scalar(170));
+  const amp = ProgramInput("Amp", Scalar(1));
 
   // create a sine wave with the trapezoid curve as the amplitude, so it pulses
-    const wave = SineWave({ frequency: fq, amplitude: amp });
+  const wave = SineWave({ frequency: fq, amplitude: amp });
 
-  return new SignalGraph({
-    // output to the BuzzDuino the buzzSignal multiplied by the gain curve
-    outputs: [
-      OutputDevice({
-        deviceName: strContains("HDK-1"),
-        source: wave,
-      }),
-    ],
+  OutputToDevice({
+    deviceName: strContains("HDK-1"),
+    source: wave,
   });
-}
+});

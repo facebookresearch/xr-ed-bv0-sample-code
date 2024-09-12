@@ -18,8 +18,8 @@
 
 #pragma warning disable CS0414
 
-using SignalProcessingDataStore;
 using UnityEngine;
+using XrpaDataflow;
 
 public class LoopingPatternComponent : MonoBehaviour {
   [SerializeField]
@@ -129,7 +129,7 @@ public class LoopingPatternComponent : MonoBehaviour {
     }
   }
 
-  private SignalProcessingDataStore.LoopingPattern _currentObj;
+  private XrpaDataflow.LoopingPattern _currentObj;
 
   void OnValidate() {
     if (_currentObj != null) {
@@ -172,7 +172,7 @@ public class LoopingPatternComponent : MonoBehaviour {
 
   public void Run() {
     Stop();
-    _currentObj = new SignalProcessingDataStore.LoopingPattern(SignalProcessingDataStoreSubsystem.Instance.DataStore);
+    _currentObj = new XrpaDataflow.LoopingPattern(SignalProcessingDataStoreSubsystem.Instance.DataStore);
     _currentObj.SetFundamentalAmp(FundamentalAmp);
     _currentObj.SetFundamentalFq(FundamentalFq);
     _currentObj.SetGain0(Gain0);
@@ -190,8 +190,8 @@ public class LoopingPatternComponent : MonoBehaviour {
     _currentObj = null;
   }
 
-  public SignalProcessingDataStore.LoopingPattern Spawn() {
-    var ret = new SignalProcessingDataStore.LoopingPattern(SignalProcessingDataStoreSubsystem.Instance.DataStore);
+  public XrpaDataflow.LoopingPattern Spawn() {
+    var ret = new XrpaDataflow.LoopingPattern(SignalProcessingDataStoreSubsystem.Instance.DataStore);
     ret.SetFundamentalAmp(FundamentalAmp);
     ret.SetFundamentalFq(FundamentalFq);
     ret.SetGain0(Gain0);

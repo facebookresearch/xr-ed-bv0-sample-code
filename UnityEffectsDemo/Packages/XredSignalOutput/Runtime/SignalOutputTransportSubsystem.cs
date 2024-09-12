@@ -20,19 +20,19 @@ using UnityEngine;
 using Xrpa;
 
 [AddComponentMenu("")]
-public class XredSignalOutputModuleSubsystem : MonoBehaviour {
-  private static XredSignalOutputModuleSubsystem _Instance;
+public class SignalOutputTransportSubsystem : MonoBehaviour {
+  private static SignalOutputTransportSubsystem _Instance;
 
-  public static XredSignalOutputModuleSubsystem MaybeInstance { get => _Instance; }
+  public static SignalOutputTransportSubsystem MaybeInstance { get => _Instance; }
 
-  public static XredSignalOutputModuleSubsystem Instance {
+  public static SignalOutputTransportSubsystem Instance {
     get {
       if (_Instance == null) {
-        _Instance = FindObjectOfType<XredSignalOutputModuleSubsystem>();
+        _Instance = FindObjectOfType<SignalOutputTransportSubsystem>();
       }
       if (_Instance == null) {
-        GameObject obj = new() { name = typeof(XredSignalOutputModuleSubsystem).Name };
-        _Instance = obj.AddComponent<XredSignalOutputModuleSubsystem>();
+        GameObject obj = new() { name = typeof(SignalOutputTransportSubsystem).Name };
+        _Instance = obj.AddComponent<SignalOutputTransportSubsystem>();
       }
       return _Instance;
     }
@@ -43,9 +43,9 @@ public class XredSignalOutputModuleSubsystem : MonoBehaviour {
       _Instance = this;
       DontDestroyOnLoad(gameObject);
       {
-        var localXredSignalOutputSignalOutputDataset = new Xrpa.SharedDataset("SignalOutput", SignalOutputDataStore.SignalOutputDataStoreConfig.GenDatasetConfig());
-        localXredSignalOutputSignalOutputDataset.Initialize();
-        XredSignalOutputSignalOutputDataset = localXredSignalOutputSignalOutputDataset;
+        var localSignalOutputDataset = new Xrpa.SharedDataset("SignalOutput", SignalOutputDataStore.SignalOutputDataStoreConfig.GenDatasetConfig());
+        localSignalOutputDataset.Initialize();
+        SignalOutputDataset = localSignalOutputDataset;
       }
     } else if (_Instance != this) {
       Destroy(gameObject);
@@ -54,12 +54,12 @@ public class XredSignalOutputModuleSubsystem : MonoBehaviour {
 
   void OnDestroy() {
     SignalOutputDataStoreSubsystem.MaybeInstance?.Shutdown();
-    XredSignalOutputSignalOutputDataset?.Dispose();
-    XredSignalOutputSignalOutputDataset = null;
+    SignalOutputDataset?.Dispose();
+    SignalOutputDataset = null;
     if (_Instance == this) {
       _Instance = null;
     }
   }
 
-  public Xrpa.DatasetInterface XredSignalOutputSignalOutputDataset;
+  public Xrpa.DatasetInterface SignalOutputDataset;
 }

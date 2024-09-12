@@ -3996,6 +3996,283 @@ public class OutboundSignalSourceFile : ISignalNode, Xrpa.IDataStoreObjectAccess
   }
 }
 
+public class OutboundSignalOscillator : ISignalNode, Xrpa.IDataStoreObjectAccessor<SignalOscillator> {
+  protected int _localNumOutputs = 1;
+  protected int _localNumChannels = 1;
+  protected WaveformType _localWaveformType = WaveformType.Sawtooth;
+  protected float _localFrequency = 440f;
+  protected Xrpa.DSIdentifier _localFrequencyNode = new Xrpa.DSIdentifier{ID0 = 0UL, ID1 = 0UL};
+  protected float _localPulseWidth = 0.5f;
+  protected Xrpa.DSIdentifier _localPulseWidthNode = new Xrpa.DSIdentifier{ID0 = 0UL, ID1 = 0UL};
+  protected ulong _createTimestamp;
+  protected ulong _changeBits = 127;
+
+  public OutboundSignalOscillator(Xrpa.DSIdentifier id) : base(id, null) {
+    _createTimestamp = Xrpa.DatasetAccessor.GetCurrentClockTimeMicroseconds();
+  }
+
+  public int GetNumOutputs() {
+    return _localNumOutputs;
+  }
+
+  public void SetNumOutputs(int numOutputs) {
+    _localNumOutputs = numOutputs;
+    if (_collection != null && (_changeBits & DSSignalOscillator.NumOutputsChangedBit) == 0) {
+      _changeBits |= DSSignalOscillator.NumOutputsChangedBit;
+      _collection.SetDirty(GetXrpaId(), DSSignalOscillator.NumOutputsChangedBit);
+    }
+  }
+
+  public int GetNumChannels() {
+    return _localNumChannels;
+  }
+
+  public void SetNumChannels(int numChannels) {
+    _localNumChannels = numChannels;
+    if (_collection != null && (_changeBits & DSSignalOscillator.NumChannelsChangedBit) == 0) {
+      _changeBits |= DSSignalOscillator.NumChannelsChangedBit;
+      _collection.SetDirty(GetXrpaId(), DSSignalOscillator.NumChannelsChangedBit);
+    }
+  }
+
+  public WaveformType GetWaveformType() {
+    return _localWaveformType;
+  }
+
+  public void SetWaveformType(WaveformType waveformType) {
+    _localWaveformType = waveformType;
+    if (_collection != null && (_changeBits & DSSignalOscillator.WaveformTypeChangedBit) == 0) {
+      _changeBits |= DSSignalOscillator.WaveformTypeChangedBit;
+      _collection.SetDirty(GetXrpaId(), DSSignalOscillator.WaveformTypeChangedBit);
+    }
+  }
+
+  public float GetFrequency() {
+    return _localFrequency;
+  }
+
+  public void SetFrequency(float frequency) {
+    _localFrequency = frequency;
+    if (_collection != null && (_changeBits & DSSignalOscillator.FrequencyChangedBit) == 0) {
+      _changeBits |= DSSignalOscillator.FrequencyChangedBit;
+      _collection.SetDirty(GetXrpaId(), DSSignalOscillator.FrequencyChangedBit);
+    }
+  }
+
+  public ISignalNode GetFrequencyNode(SignalProcessingDataStore datastore) {
+    datastore.GetObjectByID(_localFrequencyNode, out OutboundSignalChannelRouter OutboundSignalChannelRouterVal);
+    if (OutboundSignalChannelRouterVal != null) {
+      return OutboundSignalChannelRouterVal;
+    }
+    datastore.GetObjectByID(_localFrequencyNode, out OutboundSignalChannelSelect OutboundSignalChannelSelectVal);
+    if (OutboundSignalChannelSelectVal != null) {
+      return OutboundSignalChannelSelectVal;
+    }
+    datastore.GetObjectByID(_localFrequencyNode, out OutboundSignalChannelStack OutboundSignalChannelStackVal);
+    if (OutboundSignalChannelStackVal != null) {
+      return OutboundSignalChannelStackVal;
+    }
+    datastore.GetObjectByID(_localFrequencyNode, out OutboundSignalCurve OutboundSignalCurveVal);
+    if (OutboundSignalCurveVal != null) {
+      return OutboundSignalCurveVal;
+    }
+    datastore.GetObjectByID(_localFrequencyNode, out OutboundSignalDelay OutboundSignalDelayVal);
+    if (OutboundSignalDelayVal != null) {
+      return OutboundSignalDelayVal;
+    }
+    datastore.GetObjectByID(_localFrequencyNode, out OutboundSignalFeedback OutboundSignalFeedbackVal);
+    if (OutboundSignalFeedbackVal != null) {
+      return OutboundSignalFeedbackVal;
+    }
+    datastore.GetObjectByID(_localFrequencyNode, out OutboundSignalMathOp OutboundSignalMathOpVal);
+    if (OutboundSignalMathOpVal != null) {
+      return OutboundSignalMathOpVal;
+    }
+    datastore.GetObjectByID(_localFrequencyNode, out OutboundSignalMultiplexer OutboundSignalMultiplexerVal);
+    if (OutboundSignalMultiplexerVal != null) {
+      return OutboundSignalMultiplexerVal;
+    }
+    datastore.GetObjectByID(_localFrequencyNode, out OutboundSignalOscillator OutboundSignalOscillatorVal);
+    if (OutboundSignalOscillatorVal != null) {
+      return OutboundSignalOscillatorVal;
+    }
+    datastore.GetObjectByID(_localFrequencyNode, out OutboundSignalParametricEqualizer OutboundSignalParametricEqualizerVal);
+    if (OutboundSignalParametricEqualizerVal != null) {
+      return OutboundSignalParametricEqualizerVal;
+    }
+    datastore.GetObjectByID(_localFrequencyNode, out OutboundSignalPitchShift OutboundSignalPitchShiftVal);
+    if (OutboundSignalPitchShiftVal != null) {
+      return OutboundSignalPitchShiftVal;
+    }
+    datastore.GetObjectByID(_localFrequencyNode, out OutboundSignalSoftClip OutboundSignalSoftClipVal);
+    if (OutboundSignalSoftClipVal != null) {
+      return OutboundSignalSoftClipVal;
+    }
+    datastore.GetObjectByID(_localFrequencyNode, out OutboundSignalSource OutboundSignalSourceVal);
+    if (OutboundSignalSourceVal != null) {
+      return OutboundSignalSourceVal;
+    }
+    datastore.GetObjectByID(_localFrequencyNode, out OutboundSignalSourceFile OutboundSignalSourceFileVal);
+    if (OutboundSignalSourceFileVal != null) {
+      return OutboundSignalSourceFileVal;
+    }
+    return null;
+  }
+
+  public Xrpa.DSIdentifier GetFrequencyNodeId() {
+    return _localFrequencyNode;
+  }
+
+  public void SetFrequencyNode(ISignalNode frequencyNode) {
+    _localFrequencyNode = frequencyNode?.GetXrpaId() ?? new Xrpa.DSIdentifier();
+    if (_collection != null && (_changeBits & DSSignalOscillator.FrequencyNodeChangedBit) == 0) {
+      _changeBits |= DSSignalOscillator.FrequencyNodeChangedBit;
+      _collection.SetDirty(GetXrpaId(), DSSignalOscillator.FrequencyNodeChangedBit);
+    }
+  }
+
+  public void SetFrequencyNodeId(Xrpa.DSIdentifier frequencyNode) {
+    _localFrequencyNode = frequencyNode;
+    if (_collection != null && (_changeBits & DSSignalOscillator.FrequencyNodeChangedBit) == 0) {
+      _changeBits |= DSSignalOscillator.FrequencyNodeChangedBit;
+      _collection.SetDirty(GetXrpaId(), DSSignalOscillator.FrequencyNodeChangedBit);
+    }
+  }
+
+  public float GetPulseWidth() {
+    return _localPulseWidth;
+  }
+
+  public void SetPulseWidth(float pulseWidth) {
+    _localPulseWidth = pulseWidth;
+    if (_collection != null && (_changeBits & DSSignalOscillator.PulseWidthChangedBit) == 0) {
+      _changeBits |= DSSignalOscillator.PulseWidthChangedBit;
+      _collection.SetDirty(GetXrpaId(), DSSignalOscillator.PulseWidthChangedBit);
+    }
+  }
+
+  public ISignalNode GetPulseWidthNode(SignalProcessingDataStore datastore) {
+    datastore.GetObjectByID(_localPulseWidthNode, out OutboundSignalChannelRouter OutboundSignalChannelRouterVal);
+    if (OutboundSignalChannelRouterVal != null) {
+      return OutboundSignalChannelRouterVal;
+    }
+    datastore.GetObjectByID(_localPulseWidthNode, out OutboundSignalChannelSelect OutboundSignalChannelSelectVal);
+    if (OutboundSignalChannelSelectVal != null) {
+      return OutboundSignalChannelSelectVal;
+    }
+    datastore.GetObjectByID(_localPulseWidthNode, out OutboundSignalChannelStack OutboundSignalChannelStackVal);
+    if (OutboundSignalChannelStackVal != null) {
+      return OutboundSignalChannelStackVal;
+    }
+    datastore.GetObjectByID(_localPulseWidthNode, out OutboundSignalCurve OutboundSignalCurveVal);
+    if (OutboundSignalCurveVal != null) {
+      return OutboundSignalCurveVal;
+    }
+    datastore.GetObjectByID(_localPulseWidthNode, out OutboundSignalDelay OutboundSignalDelayVal);
+    if (OutboundSignalDelayVal != null) {
+      return OutboundSignalDelayVal;
+    }
+    datastore.GetObjectByID(_localPulseWidthNode, out OutboundSignalFeedback OutboundSignalFeedbackVal);
+    if (OutboundSignalFeedbackVal != null) {
+      return OutboundSignalFeedbackVal;
+    }
+    datastore.GetObjectByID(_localPulseWidthNode, out OutboundSignalMathOp OutboundSignalMathOpVal);
+    if (OutboundSignalMathOpVal != null) {
+      return OutboundSignalMathOpVal;
+    }
+    datastore.GetObjectByID(_localPulseWidthNode, out OutboundSignalMultiplexer OutboundSignalMultiplexerVal);
+    if (OutboundSignalMultiplexerVal != null) {
+      return OutboundSignalMultiplexerVal;
+    }
+    datastore.GetObjectByID(_localPulseWidthNode, out OutboundSignalOscillator OutboundSignalOscillatorVal);
+    if (OutboundSignalOscillatorVal != null) {
+      return OutboundSignalOscillatorVal;
+    }
+    datastore.GetObjectByID(_localPulseWidthNode, out OutboundSignalParametricEqualizer OutboundSignalParametricEqualizerVal);
+    if (OutboundSignalParametricEqualizerVal != null) {
+      return OutboundSignalParametricEqualizerVal;
+    }
+    datastore.GetObjectByID(_localPulseWidthNode, out OutboundSignalPitchShift OutboundSignalPitchShiftVal);
+    if (OutboundSignalPitchShiftVal != null) {
+      return OutboundSignalPitchShiftVal;
+    }
+    datastore.GetObjectByID(_localPulseWidthNode, out OutboundSignalSoftClip OutboundSignalSoftClipVal);
+    if (OutboundSignalSoftClipVal != null) {
+      return OutboundSignalSoftClipVal;
+    }
+    datastore.GetObjectByID(_localPulseWidthNode, out OutboundSignalSource OutboundSignalSourceVal);
+    if (OutboundSignalSourceVal != null) {
+      return OutboundSignalSourceVal;
+    }
+    datastore.GetObjectByID(_localPulseWidthNode, out OutboundSignalSourceFile OutboundSignalSourceFileVal);
+    if (OutboundSignalSourceFileVal != null) {
+      return OutboundSignalSourceFileVal;
+    }
+    return null;
+  }
+
+  public Xrpa.DSIdentifier GetPulseWidthNodeId() {
+    return _localPulseWidthNode;
+  }
+
+  public void SetPulseWidthNode(ISignalNode pulseWidthNode) {
+    _localPulseWidthNode = pulseWidthNode?.GetXrpaId() ?? new Xrpa.DSIdentifier();
+    if (_collection != null && (_changeBits & DSSignalOscillator.PulseWidthNodeChangedBit) == 0) {
+      _changeBits |= DSSignalOscillator.PulseWidthNodeChangedBit;
+      _collection.SetDirty(GetXrpaId(), DSSignalOscillator.PulseWidthNodeChangedBit);
+    }
+  }
+
+  public void SetPulseWidthNodeId(Xrpa.DSIdentifier pulseWidthNode) {
+    _localPulseWidthNode = pulseWidthNode;
+    if (_collection != null && (_changeBits & DSSignalOscillator.PulseWidthNodeChangedBit) == 0) {
+      _changeBits |= DSSignalOscillator.PulseWidthNodeChangedBit;
+      _collection.SetDirty(GetXrpaId(), DSSignalOscillator.PulseWidthNodeChangedBit);
+    }
+  }
+
+  public void WriteDSChanges(Xrpa.DatasetAccessor accessor) {
+    SignalOscillatorWrite objAccessor = new();
+    if (_createTimestamp != 0) {
+      objAccessor = accessor.CreateObject<SignalOscillatorWrite>(GetXrpaId(), _createTimestamp);
+      _createTimestamp = 0;
+    } else if (_changeBits != 0) {
+      objAccessor = accessor.UpdateObject<SignalOscillatorWrite>(GetXrpaId(), _changeBits);
+    }
+    if (objAccessor.IsNull()) {
+      return;
+    }
+    if ((_changeBits & DSSignalOscillator.NumOutputsChangedBit) != 0) {
+      objAccessor.SetNumOutputs(_localNumOutputs);
+    }
+    if ((_changeBits & DSSignalOscillator.NumChannelsChangedBit) != 0) {
+      objAccessor.SetNumChannels(_localNumChannels);
+    }
+    if ((_changeBits & DSSignalOscillator.WaveformTypeChangedBit) != 0) {
+      objAccessor.SetWaveformType(_localWaveformType);
+    }
+    if ((_changeBits & DSSignalOscillator.FrequencyChangedBit) != 0) {
+      objAccessor.SetFrequency(_localFrequency);
+    }
+    if ((_changeBits & DSSignalOscillator.FrequencyNodeChangedBit) != 0) {
+      objAccessor.SetFrequencyNode(_localFrequencyNode);
+    }
+    if ((_changeBits & DSSignalOscillator.PulseWidthChangedBit) != 0) {
+      objAccessor.SetPulseWidth(_localPulseWidth);
+    }
+    if ((_changeBits & DSSignalOscillator.PulseWidthNodeChangedBit) != 0) {
+      objAccessor.SetPulseWidthNode(_localPulseWidthNode);
+    }
+    _changeBits = 0;
+  }
+
+  public void ProcessDSUpdate(SignalOscillator value, ulong fieldsChanged) {
+  }
+
+  public void ProcessDSMessage(int messageType, int timestamp, Xrpa.MemoryAccessor messageData) {
+  }
+}
+
 public class OutboundSignalChannelRouter : ISignalNode, Xrpa.IDataStoreObjectAccessor<SignalChannelRouter> {
   protected int _localNumOutputs = 1;
   protected int _localNumChannels = 1;
@@ -6440,283 +6717,6 @@ public class OutboundSignalMultiplexer : ISignalNode, Xrpa.IDataStoreObjectAcces
   }
 }
 
-public class OutboundSignalOscillator : ISignalNode, Xrpa.IDataStoreObjectAccessor<SignalOscillator> {
-  protected int _localNumOutputs = 1;
-  protected int _localNumChannels = 1;
-  protected WaveformType _localWaveformType = WaveformType.Sawtooth;
-  protected float _localFrequency = 440f;
-  protected Xrpa.DSIdentifier _localFrequencyNode = new Xrpa.DSIdentifier{ID0 = 0UL, ID1 = 0UL};
-  protected float _localPulseWidth = 0.5f;
-  protected Xrpa.DSIdentifier _localPulseWidthNode = new Xrpa.DSIdentifier{ID0 = 0UL, ID1 = 0UL};
-  protected ulong _createTimestamp;
-  protected ulong _changeBits = 127;
-
-  public OutboundSignalOscillator(Xrpa.DSIdentifier id) : base(id, null) {
-    _createTimestamp = Xrpa.DatasetAccessor.GetCurrentClockTimeMicroseconds();
-  }
-
-  public int GetNumOutputs() {
-    return _localNumOutputs;
-  }
-
-  public void SetNumOutputs(int numOutputs) {
-    _localNumOutputs = numOutputs;
-    if (_collection != null && (_changeBits & DSSignalOscillator.NumOutputsChangedBit) == 0) {
-      _changeBits |= DSSignalOscillator.NumOutputsChangedBit;
-      _collection.SetDirty(GetXrpaId(), DSSignalOscillator.NumOutputsChangedBit);
-    }
-  }
-
-  public int GetNumChannels() {
-    return _localNumChannels;
-  }
-
-  public void SetNumChannels(int numChannels) {
-    _localNumChannels = numChannels;
-    if (_collection != null && (_changeBits & DSSignalOscillator.NumChannelsChangedBit) == 0) {
-      _changeBits |= DSSignalOscillator.NumChannelsChangedBit;
-      _collection.SetDirty(GetXrpaId(), DSSignalOscillator.NumChannelsChangedBit);
-    }
-  }
-
-  public WaveformType GetWaveformType() {
-    return _localWaveformType;
-  }
-
-  public void SetWaveformType(WaveformType waveformType) {
-    _localWaveformType = waveformType;
-    if (_collection != null && (_changeBits & DSSignalOscillator.WaveformTypeChangedBit) == 0) {
-      _changeBits |= DSSignalOscillator.WaveformTypeChangedBit;
-      _collection.SetDirty(GetXrpaId(), DSSignalOscillator.WaveformTypeChangedBit);
-    }
-  }
-
-  public float GetFrequency() {
-    return _localFrequency;
-  }
-
-  public void SetFrequency(float frequency) {
-    _localFrequency = frequency;
-    if (_collection != null && (_changeBits & DSSignalOscillator.FrequencyChangedBit) == 0) {
-      _changeBits |= DSSignalOscillator.FrequencyChangedBit;
-      _collection.SetDirty(GetXrpaId(), DSSignalOscillator.FrequencyChangedBit);
-    }
-  }
-
-  public ISignalNode GetFrequencyNode(SignalProcessingDataStore datastore) {
-    datastore.GetObjectByID(_localFrequencyNode, out OutboundSignalChannelRouter OutboundSignalChannelRouterVal);
-    if (OutboundSignalChannelRouterVal != null) {
-      return OutboundSignalChannelRouterVal;
-    }
-    datastore.GetObjectByID(_localFrequencyNode, out OutboundSignalChannelSelect OutboundSignalChannelSelectVal);
-    if (OutboundSignalChannelSelectVal != null) {
-      return OutboundSignalChannelSelectVal;
-    }
-    datastore.GetObjectByID(_localFrequencyNode, out OutboundSignalChannelStack OutboundSignalChannelStackVal);
-    if (OutboundSignalChannelStackVal != null) {
-      return OutboundSignalChannelStackVal;
-    }
-    datastore.GetObjectByID(_localFrequencyNode, out OutboundSignalCurve OutboundSignalCurveVal);
-    if (OutboundSignalCurveVal != null) {
-      return OutboundSignalCurveVal;
-    }
-    datastore.GetObjectByID(_localFrequencyNode, out OutboundSignalDelay OutboundSignalDelayVal);
-    if (OutboundSignalDelayVal != null) {
-      return OutboundSignalDelayVal;
-    }
-    datastore.GetObjectByID(_localFrequencyNode, out OutboundSignalFeedback OutboundSignalFeedbackVal);
-    if (OutboundSignalFeedbackVal != null) {
-      return OutboundSignalFeedbackVal;
-    }
-    datastore.GetObjectByID(_localFrequencyNode, out OutboundSignalMathOp OutboundSignalMathOpVal);
-    if (OutboundSignalMathOpVal != null) {
-      return OutboundSignalMathOpVal;
-    }
-    datastore.GetObjectByID(_localFrequencyNode, out OutboundSignalMultiplexer OutboundSignalMultiplexerVal);
-    if (OutboundSignalMultiplexerVal != null) {
-      return OutboundSignalMultiplexerVal;
-    }
-    datastore.GetObjectByID(_localFrequencyNode, out OutboundSignalOscillator OutboundSignalOscillatorVal);
-    if (OutboundSignalOscillatorVal != null) {
-      return OutboundSignalOscillatorVal;
-    }
-    datastore.GetObjectByID(_localFrequencyNode, out OutboundSignalParametricEqualizer OutboundSignalParametricEqualizerVal);
-    if (OutboundSignalParametricEqualizerVal != null) {
-      return OutboundSignalParametricEqualizerVal;
-    }
-    datastore.GetObjectByID(_localFrequencyNode, out OutboundSignalPitchShift OutboundSignalPitchShiftVal);
-    if (OutboundSignalPitchShiftVal != null) {
-      return OutboundSignalPitchShiftVal;
-    }
-    datastore.GetObjectByID(_localFrequencyNode, out OutboundSignalSoftClip OutboundSignalSoftClipVal);
-    if (OutboundSignalSoftClipVal != null) {
-      return OutboundSignalSoftClipVal;
-    }
-    datastore.GetObjectByID(_localFrequencyNode, out OutboundSignalSource OutboundSignalSourceVal);
-    if (OutboundSignalSourceVal != null) {
-      return OutboundSignalSourceVal;
-    }
-    datastore.GetObjectByID(_localFrequencyNode, out OutboundSignalSourceFile OutboundSignalSourceFileVal);
-    if (OutboundSignalSourceFileVal != null) {
-      return OutboundSignalSourceFileVal;
-    }
-    return null;
-  }
-
-  public Xrpa.DSIdentifier GetFrequencyNodeId() {
-    return _localFrequencyNode;
-  }
-
-  public void SetFrequencyNode(ISignalNode frequencyNode) {
-    _localFrequencyNode = frequencyNode?.GetXrpaId() ?? new Xrpa.DSIdentifier();
-    if (_collection != null && (_changeBits & DSSignalOscillator.FrequencyNodeChangedBit) == 0) {
-      _changeBits |= DSSignalOscillator.FrequencyNodeChangedBit;
-      _collection.SetDirty(GetXrpaId(), DSSignalOscillator.FrequencyNodeChangedBit);
-    }
-  }
-
-  public void SetFrequencyNodeId(Xrpa.DSIdentifier frequencyNode) {
-    _localFrequencyNode = frequencyNode;
-    if (_collection != null && (_changeBits & DSSignalOscillator.FrequencyNodeChangedBit) == 0) {
-      _changeBits |= DSSignalOscillator.FrequencyNodeChangedBit;
-      _collection.SetDirty(GetXrpaId(), DSSignalOscillator.FrequencyNodeChangedBit);
-    }
-  }
-
-  public float GetPulseWidth() {
-    return _localPulseWidth;
-  }
-
-  public void SetPulseWidth(float pulseWidth) {
-    _localPulseWidth = pulseWidth;
-    if (_collection != null && (_changeBits & DSSignalOscillator.PulseWidthChangedBit) == 0) {
-      _changeBits |= DSSignalOscillator.PulseWidthChangedBit;
-      _collection.SetDirty(GetXrpaId(), DSSignalOscillator.PulseWidthChangedBit);
-    }
-  }
-
-  public ISignalNode GetPulseWidthNode(SignalProcessingDataStore datastore) {
-    datastore.GetObjectByID(_localPulseWidthNode, out OutboundSignalChannelRouter OutboundSignalChannelRouterVal);
-    if (OutboundSignalChannelRouterVal != null) {
-      return OutboundSignalChannelRouterVal;
-    }
-    datastore.GetObjectByID(_localPulseWidthNode, out OutboundSignalChannelSelect OutboundSignalChannelSelectVal);
-    if (OutboundSignalChannelSelectVal != null) {
-      return OutboundSignalChannelSelectVal;
-    }
-    datastore.GetObjectByID(_localPulseWidthNode, out OutboundSignalChannelStack OutboundSignalChannelStackVal);
-    if (OutboundSignalChannelStackVal != null) {
-      return OutboundSignalChannelStackVal;
-    }
-    datastore.GetObjectByID(_localPulseWidthNode, out OutboundSignalCurve OutboundSignalCurveVal);
-    if (OutboundSignalCurveVal != null) {
-      return OutboundSignalCurveVal;
-    }
-    datastore.GetObjectByID(_localPulseWidthNode, out OutboundSignalDelay OutboundSignalDelayVal);
-    if (OutboundSignalDelayVal != null) {
-      return OutboundSignalDelayVal;
-    }
-    datastore.GetObjectByID(_localPulseWidthNode, out OutboundSignalFeedback OutboundSignalFeedbackVal);
-    if (OutboundSignalFeedbackVal != null) {
-      return OutboundSignalFeedbackVal;
-    }
-    datastore.GetObjectByID(_localPulseWidthNode, out OutboundSignalMathOp OutboundSignalMathOpVal);
-    if (OutboundSignalMathOpVal != null) {
-      return OutboundSignalMathOpVal;
-    }
-    datastore.GetObjectByID(_localPulseWidthNode, out OutboundSignalMultiplexer OutboundSignalMultiplexerVal);
-    if (OutboundSignalMultiplexerVal != null) {
-      return OutboundSignalMultiplexerVal;
-    }
-    datastore.GetObjectByID(_localPulseWidthNode, out OutboundSignalOscillator OutboundSignalOscillatorVal);
-    if (OutboundSignalOscillatorVal != null) {
-      return OutboundSignalOscillatorVal;
-    }
-    datastore.GetObjectByID(_localPulseWidthNode, out OutboundSignalParametricEqualizer OutboundSignalParametricEqualizerVal);
-    if (OutboundSignalParametricEqualizerVal != null) {
-      return OutboundSignalParametricEqualizerVal;
-    }
-    datastore.GetObjectByID(_localPulseWidthNode, out OutboundSignalPitchShift OutboundSignalPitchShiftVal);
-    if (OutboundSignalPitchShiftVal != null) {
-      return OutboundSignalPitchShiftVal;
-    }
-    datastore.GetObjectByID(_localPulseWidthNode, out OutboundSignalSoftClip OutboundSignalSoftClipVal);
-    if (OutboundSignalSoftClipVal != null) {
-      return OutboundSignalSoftClipVal;
-    }
-    datastore.GetObjectByID(_localPulseWidthNode, out OutboundSignalSource OutboundSignalSourceVal);
-    if (OutboundSignalSourceVal != null) {
-      return OutboundSignalSourceVal;
-    }
-    datastore.GetObjectByID(_localPulseWidthNode, out OutboundSignalSourceFile OutboundSignalSourceFileVal);
-    if (OutboundSignalSourceFileVal != null) {
-      return OutboundSignalSourceFileVal;
-    }
-    return null;
-  }
-
-  public Xrpa.DSIdentifier GetPulseWidthNodeId() {
-    return _localPulseWidthNode;
-  }
-
-  public void SetPulseWidthNode(ISignalNode pulseWidthNode) {
-    _localPulseWidthNode = pulseWidthNode?.GetXrpaId() ?? new Xrpa.DSIdentifier();
-    if (_collection != null && (_changeBits & DSSignalOscillator.PulseWidthNodeChangedBit) == 0) {
-      _changeBits |= DSSignalOscillator.PulseWidthNodeChangedBit;
-      _collection.SetDirty(GetXrpaId(), DSSignalOscillator.PulseWidthNodeChangedBit);
-    }
-  }
-
-  public void SetPulseWidthNodeId(Xrpa.DSIdentifier pulseWidthNode) {
-    _localPulseWidthNode = pulseWidthNode;
-    if (_collection != null && (_changeBits & DSSignalOscillator.PulseWidthNodeChangedBit) == 0) {
-      _changeBits |= DSSignalOscillator.PulseWidthNodeChangedBit;
-      _collection.SetDirty(GetXrpaId(), DSSignalOscillator.PulseWidthNodeChangedBit);
-    }
-  }
-
-  public void WriteDSChanges(Xrpa.DatasetAccessor accessor) {
-    SignalOscillatorWrite objAccessor = new();
-    if (_createTimestamp != 0) {
-      objAccessor = accessor.CreateObject<SignalOscillatorWrite>(GetXrpaId(), _createTimestamp);
-      _createTimestamp = 0;
-    } else if (_changeBits != 0) {
-      objAccessor = accessor.UpdateObject<SignalOscillatorWrite>(GetXrpaId(), _changeBits);
-    }
-    if (objAccessor.IsNull()) {
-      return;
-    }
-    if ((_changeBits & DSSignalOscillator.NumOutputsChangedBit) != 0) {
-      objAccessor.SetNumOutputs(_localNumOutputs);
-    }
-    if ((_changeBits & DSSignalOscillator.NumChannelsChangedBit) != 0) {
-      objAccessor.SetNumChannels(_localNumChannels);
-    }
-    if ((_changeBits & DSSignalOscillator.WaveformTypeChangedBit) != 0) {
-      objAccessor.SetWaveformType(_localWaveformType);
-    }
-    if ((_changeBits & DSSignalOscillator.FrequencyChangedBit) != 0) {
-      objAccessor.SetFrequency(_localFrequency);
-    }
-    if ((_changeBits & DSSignalOscillator.FrequencyNodeChangedBit) != 0) {
-      objAccessor.SetFrequencyNode(_localFrequencyNode);
-    }
-    if ((_changeBits & DSSignalOscillator.PulseWidthChangedBit) != 0) {
-      objAccessor.SetPulseWidth(_localPulseWidth);
-    }
-    if ((_changeBits & DSSignalOscillator.PulseWidthNodeChangedBit) != 0) {
-      objAccessor.SetPulseWidthNode(_localPulseWidthNode);
-    }
-    _changeBits = 0;
-  }
-
-  public void ProcessDSUpdate(SignalOscillator value, ulong fieldsChanged) {
-  }
-
-  public void ProcessDSMessage(int messageType, int timestamp, Xrpa.MemoryAccessor messageData) {
-  }
-}
-
 public class OutboundSignalParametricEqualizer : ISignalNode, Xrpa.IDataStoreObjectAccessor<SignalParametricEqualizer> {
   protected int _localNumOutputs = 1;
   protected int _localNumChannels = 1;
@@ -7666,17 +7666,16 @@ public class OutboundSignalOutputData : Xrpa.DataStoreObject, Xrpa.IDataStoreObj
 }
 
 public class OutboundSignalOutputDevice : Xrpa.DataStoreObject, Xrpa.IDataStoreObjectAccessor<SignalOutputDevice> {
+  // Set to true if a matching device was found
+  private bool _localFoundMatch = false;
   protected Xrpa.DSIdentifier _localSrcNode = new Xrpa.DSIdentifier{ID0 = 0UL, ID1 = 0UL};
   protected int _localChannelOffset = 0;
 
   // pseudo-regex, with just $ and ^ supported for now
   protected string _localDeviceNameFilter = "";
   protected DeviceHandednessFilter _localDeviceHandednessFilter = DeviceHandednessFilter.Any;
-
-  // Set to true if a matching device was found
-  protected bool _localFoundMatch = false;
   protected ulong _createTimestamp;
-  protected ulong _changeBits = 31;
+  protected ulong _changeBits = 15;
 
   public OutboundSignalOutputDevice(Xrpa.DSIdentifier id) : base(id, null) {
     _createTimestamp = Xrpa.DatasetAccessor.GetCurrentClockTimeMicroseconds();
@@ -7798,23 +7797,12 @@ public class OutboundSignalOutputDevice : Xrpa.DataStoreObject, Xrpa.IDataStoreO
     }
   }
 
-  public bool GetFoundMatch() {
-    return _localFoundMatch;
-  }
-
-  public void SetFoundMatch(bool foundMatch) {
-    _localFoundMatch = foundMatch;
-    if (_collection != null && (_changeBits & DSSignalOutputDevice.FoundMatchChangedBit) == 0) {
-      _changeBits |= DSSignalOutputDevice.FoundMatchChangedBit;
-      _collection.SetDirty(GetXrpaId(), DSSignalOutputDevice.FoundMatchChangedBit);
-    }
-  }
-
   public void WriteDSChanges(Xrpa.DatasetAccessor accessor) {
     SignalOutputDeviceWrite objAccessor = new();
     if (_createTimestamp != 0) {
       objAccessor = accessor.CreateObject<SignalOutputDeviceWrite>(GetXrpaId(), _createTimestamp);
       _createTimestamp = 0;
+      objAccessor.SetFoundMatch(false);
     } else if (_changeBits != 0) {
       objAccessor = accessor.UpdateObject<SignalOutputDeviceWrite>(GetXrpaId(), _changeBits);
     }
@@ -7833,13 +7821,17 @@ public class OutboundSignalOutputDevice : Xrpa.DataStoreObject, Xrpa.IDataStoreO
     if ((_changeBits & DSSignalOutputDevice.DeviceHandednessFilterChangedBit) != 0) {
       objAccessor.SetDeviceHandednessFilter(_localDeviceHandednessFilter);
     }
-    if ((_changeBits & DSSignalOutputDevice.FoundMatchChangedBit) != 0) {
-      objAccessor.SetFoundMatch(_localFoundMatch);
-    }
     _changeBits = 0;
   }
 
   public void ProcessDSUpdate(SignalOutputDevice value, ulong fieldsChanged) {
+    if (value.CheckFoundMatchChanged(fieldsChanged)) {
+      _localFoundMatch = value.GetFoundMatch();
+    }
+  }
+
+  public bool GetFoundMatch() {
+    return _localFoundMatch;
   }
 
   public void ProcessDSMessage(int messageType, int timestamp, Xrpa.MemoryAccessor messageData) {
@@ -7887,6 +7879,18 @@ public class OutboundSignalSourceFileCollection : Xrpa.ObjectCollection<SignalSo
   public OutboundSignalSourceFileCollection(Xrpa.DatasetReconciler reconciler) : base(reconciler, SignalSourceFile.DS_TYPE, 0, 0, true) {}
 
   public void AddObject(OutboundSignalSourceFile obj) {
+    AddObjectInternal(obj);
+  }
+
+  public void RemoveObject(Xrpa.DSIdentifier id) {
+    RemoveObjectInternal(id);
+  }
+}
+
+public class OutboundSignalOscillatorCollection : Xrpa.ObjectCollection<SignalOscillator, OutboundSignalOscillator> {
+  public OutboundSignalOscillatorCollection(Xrpa.DatasetReconciler reconciler) : base(reconciler, SignalOscillator.DS_TYPE, 0, 0, true) {}
+
+  public void AddObject(OutboundSignalOscillator obj) {
     AddObjectInternal(obj);
   }
 
@@ -7991,18 +7995,6 @@ public class OutboundSignalMultiplexerCollection : Xrpa.ObjectCollection<SignalM
   }
 }
 
-public class OutboundSignalOscillatorCollection : Xrpa.ObjectCollection<SignalOscillator, OutboundSignalOscillator> {
-  public OutboundSignalOscillatorCollection(Xrpa.DatasetReconciler reconciler) : base(reconciler, SignalOscillator.DS_TYPE, 0, 0, true) {}
-
-  public void AddObject(OutboundSignalOscillator obj) {
-    AddObjectInternal(obj);
-  }
-
-  public void RemoveObject(Xrpa.DSIdentifier id) {
-    RemoveObjectInternal(id);
-  }
-}
-
 public class OutboundSignalParametricEqualizerCollection : Xrpa.ObjectCollection<SignalParametricEqualizer, OutboundSignalParametricEqualizer> {
   public OutboundSignalParametricEqualizerCollection(Xrpa.DatasetReconciler reconciler) : base(reconciler, SignalParametricEqualizer.DS_TYPE, 0, 0, true) {}
 
@@ -8052,7 +8044,7 @@ public class OutboundSignalOutputDataCollection : Xrpa.ObjectCollection<SignalOu
 }
 
 public class OutboundSignalOutputDeviceCollection : Xrpa.ObjectCollection<SignalOutputDevice, OutboundSignalOutputDevice> {
-  public OutboundSignalOutputDeviceCollection(Xrpa.DatasetReconciler reconciler) : base(reconciler, SignalOutputDevice.DS_TYPE, 0, 0, true) {}
+  public OutboundSignalOutputDeviceCollection(Xrpa.DatasetReconciler reconciler) : base(reconciler, SignalOutputDevice.DS_TYPE, 16, 0, true) {}
 
   public void AddObject(OutboundSignalOutputDevice obj) {
     AddObjectInternal(obj);
@@ -8075,6 +8067,8 @@ public class SignalProcessingDataStore : Xrpa.DatasetReconciler {
     RegisterCollection(SignalSourceOut);
     SignalSourceFileOut = new OutboundSignalSourceFileCollection(this);
     RegisterCollection(SignalSourceFileOut);
+    SignalOscillatorOut = new OutboundSignalOscillatorCollection(this);
+    RegisterCollection(SignalOscillatorOut);
     SignalChannelRouterOut = new OutboundSignalChannelRouterCollection(this);
     RegisterCollection(SignalChannelRouterOut);
     SignalChannelSelectOut = new OutboundSignalChannelSelectCollection(this);
@@ -8091,8 +8085,6 @@ public class SignalProcessingDataStore : Xrpa.DatasetReconciler {
     RegisterCollection(SignalMathOpOut);
     SignalMultiplexerOut = new OutboundSignalMultiplexerCollection(this);
     RegisterCollection(SignalMultiplexerOut);
-    SignalOscillatorOut = new OutboundSignalOscillatorCollection(this);
-    RegisterCollection(SignalOscillatorOut);
     SignalParametricEqualizerOut = new OutboundSignalParametricEqualizerCollection(this);
     RegisterCollection(SignalParametricEqualizerOut);
     SignalPitchShiftOut = new OutboundSignalPitchShiftCollection(this);
@@ -8109,6 +8101,7 @@ public class SignalProcessingDataStore : Xrpa.DatasetReconciler {
   public OutboundSignalEventCombinerCollection SignalEventCombinerOut;
   public OutboundSignalSourceCollection SignalSourceOut;
   public OutboundSignalSourceFileCollection SignalSourceFileOut;
+  public OutboundSignalOscillatorCollection SignalOscillatorOut;
   public OutboundSignalChannelRouterCollection SignalChannelRouterOut;
   public OutboundSignalChannelSelectCollection SignalChannelSelectOut;
   public OutboundSignalChannelStackCollection SignalChannelStackOut;
@@ -8117,7 +8110,6 @@ public class SignalProcessingDataStore : Xrpa.DatasetReconciler {
   public OutboundSignalFeedbackCollection SignalFeedbackOut;
   public OutboundSignalMathOpCollection SignalMathOpOut;
   public OutboundSignalMultiplexerCollection SignalMultiplexerOut;
-  public OutboundSignalOscillatorCollection SignalOscillatorOut;
   public OutboundSignalParametricEqualizerCollection SignalParametricEqualizerOut;
   public OutboundSignalPitchShiftCollection SignalPitchShiftOut;
   public OutboundSignalSoftClipCollection SignalSoftClipOut;
@@ -8138,6 +8130,10 @@ public class SignalProcessingDataStore : Xrpa.DatasetReconciler {
 
   public void GetObjectByID(Xrpa.DSIdentifier id, out OutboundSignalSourceFile obj) {
     obj = SignalSourceFileOut.GetObject(id);
+  }
+
+  public void GetObjectByID(Xrpa.DSIdentifier id, out OutboundSignalOscillator obj) {
+    obj = SignalOscillatorOut.GetObject(id);
   }
 
   public void GetObjectByID(Xrpa.DSIdentifier id, out OutboundSignalChannelRouter obj) {
@@ -8170,10 +8166,6 @@ public class SignalProcessingDataStore : Xrpa.DatasetReconciler {
 
   public void GetObjectByID(Xrpa.DSIdentifier id, out OutboundSignalMultiplexer obj) {
     obj = SignalMultiplexerOut.GetObject(id);
-  }
-
-  public void GetObjectByID(Xrpa.DSIdentifier id, out OutboundSignalOscillator obj) {
-    obj = SignalOscillatorOut.GetObject(id);
   }
 
   public void GetObjectByID(Xrpa.DSIdentifier id, out OutboundSignalParametricEqualizer obj) {

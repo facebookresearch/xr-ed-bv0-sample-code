@@ -18,8 +18,8 @@
 
 #pragma warning disable CS0414
 
-using SignalProcessingDataStore;
 using UnityEngine;
+using XrpaDataflow;
 
 public class HapticClickComponent : MonoBehaviour {
   [SerializeField]
@@ -51,7 +51,7 @@ public class HapticClickComponent : MonoBehaviour {
     }
   }
 
-  private SignalProcessingDataStore.HapticClick _currentObj;
+  private XrpaDataflow.HapticClick _currentObj;
 
   void OnValidate() {
     if (_currentObj != null) {
@@ -76,7 +76,7 @@ public class HapticClickComponent : MonoBehaviour {
 
   public void Run() {
     Stop();
-    _currentObj = new SignalProcessingDataStore.HapticClick(SignalProcessingDataStoreSubsystem.Instance.DataStore);
+    _currentObj = new XrpaDataflow.HapticClick(SignalProcessingDataStoreSubsystem.Instance.DataStore);
     _currentObj.SetGainChannel0(GainChannel0);
     _currentObj.SetGainChannel1(GainChannel1);
   }
@@ -88,8 +88,8 @@ public class HapticClickComponent : MonoBehaviour {
     _currentObj = null;
   }
 
-  public SignalProcessingDataStore.HapticClick Spawn() {
-    var ret = new SignalProcessingDataStore.HapticClick(SignalProcessingDataStoreSubsystem.Instance.DataStore);
+  public XrpaDataflow.HapticClick Spawn() {
+    var ret = new XrpaDataflow.HapticClick(SignalProcessingDataStoreSubsystem.Instance.DataStore);
     ret.SetGainChannel0(GainChannel0);
     ret.SetGainChannel1(GainChannel1);
     return ret;

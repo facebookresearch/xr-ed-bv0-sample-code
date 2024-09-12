@@ -41,7 +41,7 @@ public class SignalOutputDataStoreSubsystem : MonoBehaviour {
     if (_Instance == null) {
       _Instance = this;
       DontDestroyOnLoad(gameObject);
-      DataStore = new SignalOutputDataStore.SignalOutputDataStore(XredSignalOutputModuleSubsystem.Instance.XredSignalOutputSignalOutputDataset);
+      DataStore = new SignalOutputDataStore.SignalOutputDataStore(SignalOutputTransportSubsystem.Instance.SignalOutputDataset);
     } else if (_Instance != this) {
       Destroy(gameObject);
     }

@@ -9,15 +9,15 @@ import {
   Delay,
   Feedback,
   MultiplyAdd,
-  OutputDevice,
-  SignalGraph,
+  OutputToDevice,
   SineWave,
   StackChannels,
   strContains,
   TrapezoidCurve,
 } from "@xrpa/xred-signal-processing";
+import { XrpaDataflowProgram } from "@xrpa/xrpa-orchestrator";
 
-export function TestEffect2(): SignalGraph {
+export const TestEffect2 = XrpaDataflowProgram("TestEffect2", () => {
   // create a trapezoid curve with a long low hold at the end
   const amplitudeCurve = TrapezoidCurve({
     softCurve: true,
@@ -32,20 +32,15 @@ export function TestEffect2(): SignalGraph {
   amplitudeCurve.setStartEvent(amplitudeCurve.onDone(), true);
 
   // create a sine wave with the trapezoid curve as the amplitude, so it pulses
-  const sinePulse = SineWave({ frequency: 170, amplitude: amplitudeCurve});
+  const sinePulse = SineWave({ frequency: 170, amplitude: amplitudeCurve });
 
   // create a feedback-delay loop for echo
   const feedback = Feedback();
   const outputSignal = MultiplyAdd(feedback, 0.25, sinePulse);
   feedback.setSource(Delay(outputSignal, 500));
 
-  return new SignalGraph({
-    // output to BuzzDuino
-    outputs: [
-      OutputDevice({
-        deviceName: strContains("BuzzDuino"),
-        source: StackChannels(outputSignal, sinePulse),
-      }),
-    ],
+  OutputToDevice({
+    deviceName: strContains("BuzzDuino"),
+    source: StackChannels(outputSignal, sinePulse),
   });
-}
+});

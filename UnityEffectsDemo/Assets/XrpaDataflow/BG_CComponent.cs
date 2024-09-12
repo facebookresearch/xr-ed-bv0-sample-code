@@ -18,8 +18,8 @@
 
 #pragma warning disable CS0414
 
-using SignalProcessingDataStore;
 using UnityEngine;
+using XrpaDataflow;
 
 public class BG_CComponent : MonoBehaviour {
   [SerializeField]
@@ -90,7 +90,7 @@ public class BG_CComponent : MonoBehaviour {
     }
   }
 
-  private SignalProcessingDataStore.BG_C _currentObj;
+  private XrpaDataflow.BG_C _currentObj;
 
   void OnValidate() {
     if (_currentObj != null) {
@@ -124,7 +124,7 @@ public class BG_CComponent : MonoBehaviour {
 
   public void Run() {
     Stop();
-    _currentObj = new SignalProcessingDataStore.BG_C(SignalProcessingDataStoreSubsystem.Instance.DataStore);
+    _currentObj = new XrpaDataflow.BG_C(SignalProcessingDataStoreSubsystem.Instance.DataStore);
     _currentObj.SetGain0(Gain0);
     _currentObj.SetGain1(Gain1);
     _currentObj.SetGain2(Gain2);
@@ -139,8 +139,8 @@ public class BG_CComponent : MonoBehaviour {
     _currentObj = null;
   }
 
-  public SignalProcessingDataStore.BG_C Spawn() {
-    var ret = new SignalProcessingDataStore.BG_C(SignalProcessingDataStoreSubsystem.Instance.DataStore);
+  public XrpaDataflow.BG_C Spawn() {
+    var ret = new XrpaDataflow.BG_C(SignalProcessingDataStoreSubsystem.Instance.DataStore);
     ret.SetGain0(Gain0);
     ret.SetGain1(Gain1);
     ret.SetGain2(Gain2);

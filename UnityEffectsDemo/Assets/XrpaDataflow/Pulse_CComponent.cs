@@ -18,10 +18,10 @@
 
 #pragma warning disable CS0414
 
-using SignalProcessingDataStore;
 using UnityEngine;
+using XrpaDataflow;
 
-public class ContinuousWaveComponent : MonoBehaviour {
+public class Pulse_CComponent : MonoBehaviour {
   [SerializeField]
   public bool AutoRun = false;
 
@@ -39,7 +39,7 @@ public class ContinuousWaveComponent : MonoBehaviour {
   }
 
   [SerializeField]
-  private float _FundamentalFq = 170f;
+  private float _FundamentalFq = 350f;
 
   public float FundamentalFq {
     get => _FundamentalFq;
@@ -52,32 +52,71 @@ public class ContinuousWaveComponent : MonoBehaviour {
   }
 
   [SerializeField]
-  private float _LFOAmp = 1f;
+  private float _Gain0 = 1f;
 
-  public float LFOAmp {
-    get => _LFOAmp;
+  public float Gain0 {
+    get => _Gain0;
     set {
-      _LFOAmp = value;
+      _Gain0 = value;
       if (_currentObj != null) {
-        _currentObj.SetLFOAmp(value);
+        _currentObj.SetGain0(value);
       }
     }
   }
 
   [SerializeField]
-  private float _LFOFq = 5f;
+  private float _Gain1 = 1f;
 
-  public float LFOFq {
-    get => _LFOFq;
+  public float Gain1 {
+    get => _Gain1;
     set {
-      _LFOFq = value;
+      _Gain1 = value;
       if (_currentObj != null) {
-        _currentObj.SetLFOFq(value);
+        _currentObj.SetGain1(value);
       }
     }
   }
 
-  private SignalProcessingDataStore.ContinuousWave _currentObj;
+  [SerializeField]
+  private float _Gain2 = 1f;
+
+  public float Gain2 {
+    get => _Gain2;
+    set {
+      _Gain2 = value;
+      if (_currentObj != null) {
+        _currentObj.SetGain2(value);
+      }
+    }
+  }
+
+  [SerializeField]
+  private float _Gain3 = 1f;
+
+  public float Gain3 {
+    get => _Gain3;
+    set {
+      _Gain3 = value;
+      if (_currentObj != null) {
+        _currentObj.SetGain3(value);
+      }
+    }
+  }
+
+  [SerializeField]
+  private float _Gain4 = 1f;
+
+  public float Gain4 {
+    get => _Gain4;
+    set {
+      _Gain4 = value;
+      if (_currentObj != null) {
+        _currentObj.SetGain4(value);
+      }
+    }
+  }
+
+  private XrpaDataflow.Pulse_C _currentObj;
 
   void OnValidate() {
     if (_currentObj != null) {
@@ -87,11 +126,20 @@ public class ContinuousWaveComponent : MonoBehaviour {
       if (!_currentObj.GetFundamentalFq().Equals(_FundamentalFq)) {
         _currentObj.SetFundamentalFq(_FundamentalFq);
       }
-      if (!_currentObj.GetLFOAmp().Equals(_LFOAmp)) {
-        _currentObj.SetLFOAmp(_LFOAmp);
+      if (!_currentObj.GetGain0().Equals(_Gain0)) {
+        _currentObj.SetGain0(_Gain0);
       }
-      if (!_currentObj.GetLFOFq().Equals(_LFOFq)) {
-        _currentObj.SetLFOFq(_LFOFq);
+      if (!_currentObj.GetGain1().Equals(_Gain1)) {
+        _currentObj.SetGain1(_Gain1);
+      }
+      if (!_currentObj.GetGain2().Equals(_Gain2)) {
+        _currentObj.SetGain2(_Gain2);
+      }
+      if (!_currentObj.GetGain3().Equals(_Gain3)) {
+        _currentObj.SetGain3(_Gain3);
+      }
+      if (!_currentObj.GetGain4().Equals(_Gain4)) {
+        _currentObj.SetGain4(_Gain4);
       }
     }
   }
@@ -108,11 +156,14 @@ public class ContinuousWaveComponent : MonoBehaviour {
 
   public void Run() {
     Stop();
-    _currentObj = new SignalProcessingDataStore.ContinuousWave(SignalProcessingDataStoreSubsystem.Instance.DataStore);
+    _currentObj = new XrpaDataflow.Pulse_C(SignalProcessingDataStoreSubsystem.Instance.DataStore);
     _currentObj.SetFundamentalAmp(FundamentalAmp);
     _currentObj.SetFundamentalFq(FundamentalFq);
-    _currentObj.SetLFOAmp(LFOAmp);
-    _currentObj.SetLFOFq(LFOFq);
+    _currentObj.SetGain0(Gain0);
+    _currentObj.SetGain1(Gain1);
+    _currentObj.SetGain2(Gain2);
+    _currentObj.SetGain3(Gain3);
+    _currentObj.SetGain4(Gain4);
   }
 
   public void Stop() {
@@ -122,12 +173,15 @@ public class ContinuousWaveComponent : MonoBehaviour {
     _currentObj = null;
   }
 
-  public SignalProcessingDataStore.ContinuousWave Spawn() {
-    var ret = new SignalProcessingDataStore.ContinuousWave(SignalProcessingDataStoreSubsystem.Instance.DataStore);
+  public XrpaDataflow.Pulse_C Spawn() {
+    var ret = new XrpaDataflow.Pulse_C(SignalProcessingDataStoreSubsystem.Instance.DataStore);
     ret.SetFundamentalAmp(FundamentalAmp);
     ret.SetFundamentalFq(FundamentalFq);
-    ret.SetLFOAmp(LFOAmp);
-    ret.SetLFOFq(LFOFq);
+    ret.SetGain0(Gain0);
+    ret.SetGain1(Gain1);
+    ret.SetGain2(Gain2);
+    ret.SetGain3(Gain3);
+    ret.SetGain4(Gain4);
     return ret;
   }
 }
