@@ -42,7 +42,6 @@ BLE_DEBUG_LOG_ENABLE = 0
 
 
 class App(QWidget):
-
     signal_ble_scan_done = Signal()
     signal_ble_connected = Signal()
     signal_ble_disconnected = Signal()
@@ -471,7 +470,6 @@ class App(QWidget):
         return
 
     def deviceDiscovered(self, device, advertisement_data):
-
         # Sometimes devices show up without a name - return if so
         if device.name == "" or device.name is None:
             return
