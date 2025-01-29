@@ -1,0 +1,8 @@
+name: unity-python-demo
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10.14
+  - pip>=23.0
+  - pyqt=5.15

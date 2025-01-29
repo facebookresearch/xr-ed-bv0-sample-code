@@ -1,0 +1,23 @@
+{
+  "name": "unity-python-demo",
+  "version": "1.0.0",
+  "description": "Unity + Python Demo",
+  "main": "./index.ts",
+  "private": true,
+  "scripts": {
+    "lint": "eslint --ext .ts,.tsx .",
+    "build": "ts-node ./index.ts"
+  },
+  "devDependencies": {
+    "@types/node": "18.11.18",
+    "@typescript-eslint/eslint-plugin": "^5.57.0",
+    "@typescript-eslint/parser": "^5.57.0",
+    "eslint": "8.32.0",
+    "eslint-plugin-import": "^2.27.5",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "@xrpa/xrpa-orchestrator": "^1.6.0"
+  }
+}
