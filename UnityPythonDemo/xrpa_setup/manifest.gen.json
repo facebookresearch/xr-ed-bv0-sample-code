@@ -27,6 +27,8 @@
   "../python/xrpa_runtime/utils/xrpa_module.py",
   "../python/xrpa_runtime/utils/xrpa_types.py",
   "../unity/Packages/SensoryStimulus/MSI.SensoryStimulus.asmdef",
+  "../unity/Packages/SensoryStimulus/Runtime/PsychoPyWindowComponent.cs",
+  "../unity/Packages/SensoryStimulus/Runtime/PsychoPyWindowComponentSpawner.cs",
   "../unity/Packages/SensoryStimulus/Runtime/SensoryStimulusDataStore.cs",
   "../unity/Packages/SensoryStimulus/Runtime/SensoryStimulusDataStoreSubsystem.cs",
   "../unity/Packages/SensoryStimulus/Runtime/SensoryStimulusTransportSubsystem.cs",

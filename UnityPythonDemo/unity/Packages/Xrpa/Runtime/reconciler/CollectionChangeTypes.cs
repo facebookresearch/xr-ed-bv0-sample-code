@@ -46,22 +46,22 @@ namespace Xrpa
 
         public ObjectUuid GetObjectId()
         {
-            return ObjectUuid.ReadValue(_memAccessor, ChangeEventAccessor.DS_SIZE);
+            return ObjectUuid.ReadValue(_memAccessor, new MemoryOffset(ChangeEventAccessor.DS_SIZE));
         }
 
         public void SetObjectId(ObjectUuid id)
         {
-            ObjectUuid.WriteValue(id, _memAccessor, ChangeEventAccessor.DS_SIZE);
+            ObjectUuid.WriteValue(id, _memAccessor, new MemoryOffset(ChangeEventAccessor.DS_SIZE));
         }
 
         public int GetCollectionId()
         {
-            return _memAccessor.ReadInt(ChangeEventAccessor.DS_SIZE + 16);
+            return _memAccessor.ReadInt(new MemoryOffset(ChangeEventAccessor.DS_SIZE + 16));
         }
 
         public void SetCollectionId(int collectionId)
         {
-            _memAccessor.WriteInt(collectionId, ChangeEventAccessor.DS_SIZE + 16);
+            _memAccessor.WriteInt(collectionId, new MemoryOffset(ChangeEventAccessor.DS_SIZE + 16));
         }
 
         public virtual MemoryAccessor AccessChangeData()
@@ -87,12 +87,12 @@ namespace Xrpa
 
         public ulong GetFieldsChanged()
         {
-            return _memAccessor.ReadUlong(CollectionChangeEventAccessor.DS_SIZE);
+            return _memAccessor.ReadUlong(new MemoryOffset(CollectionChangeEventAccessor.DS_SIZE));
         }
 
         public void SetFieldsChanged(ulong fieldsChanged)
         {
-            _memAccessor.WriteUlong(fieldsChanged, CollectionChangeEventAccessor.DS_SIZE);
+            _memAccessor.WriteUlong(fieldsChanged, new MemoryOffset(CollectionChangeEventAccessor.DS_SIZE));
         }
 
         public override MemoryAccessor AccessChangeData()
@@ -103,6 +103,7 @@ namespace Xrpa
 
     public class CollectionMessageChangeEventAccessor : CollectionChangeEventAccessor
     {
+        // TODO this should be 4 bytes, not 8
         new public static readonly int DS_SIZE = CollectionChangeEventAccessor.DS_SIZE + 8;
 
         public CollectionMessageChangeEventAccessor() { }
@@ -118,12 +119,12 @@ namespace Xrpa
 
         public int GetFieldId()
         {
-            return _memAccessor.ReadInt(CollectionChangeEventAccessor.DS_SIZE);
+            return _memAccessor.ReadInt(new MemoryOffset(CollectionChangeEventAccessor.DS_SIZE));
         }
 
         public void SetFieldId(int fieldId)
         {
-            _memAccessor.WriteInt(fieldId, CollectionChangeEventAccessor.DS_SIZE);
+            _memAccessor.WriteInt(fieldId, new MemoryOffset(CollectionChangeEventAccessor.DS_SIZE));
         }
 
         public override MemoryAccessor AccessChangeData()

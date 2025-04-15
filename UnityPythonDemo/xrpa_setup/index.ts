@@ -10,6 +10,7 @@ import path from "path";
 import {
   bindExternalProgram,
   Collection,
+  Image,
   Message,
   ObjectTransform,
   Output,
@@ -52,6 +53,19 @@ const SensoryStimulusInterface = XrpaProgramInterface("MSI.SensoryStimulus", () 
       // TODO - add audio and visual stimulus types
 
       UserResponse: Output(Message("UserResponse")),
+    },
+  })));
+
+  ProgramInput("PsychoPyWindow", Spawnable(Collection({
+    maxCount: 4,
+    fields: {
+      display: Message({
+        image: Image({
+          expectedWidth: 800,
+          expectedHeight: 600,
+          expectedBytesPerPixel: 3,
+        }),
+      }),
     },
   })));
 });

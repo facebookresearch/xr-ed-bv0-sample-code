@@ -31,7 +31,7 @@ namespace Xrpa
         {
             _memSource = memSource;
             _propsAccessor = memSource.Slice(memOffset, PROPS_SIZE);
-            _poolAccessor = memSource.Slice(memOffset + PROPS_SIZE, _propsAccessor.ReadInt(0));
+            _poolAccessor = memSource.Slice(memOffset + PROPS_SIZE, _propsAccessor.ReadInt(new MemoryOffset(0)));
         }
 
         public static int GetMemSize(int poolSize)
@@ -43,11 +43,11 @@ namespace Xrpa
         {
             get
             {
-                return _propsAccessor.ReadInt(0);
+                return _propsAccessor.ReadInt(new MemoryOffset(0));
             }
             set
             {
-                _propsAccessor.WriteInt(value, 0);
+                _propsAccessor.WriteInt(value, new MemoryOffset(0));
             }
         }
 
@@ -55,11 +55,11 @@ namespace Xrpa
         {
             get
             {
-                return _propsAccessor.ReadInt(4);
+                return _propsAccessor.ReadInt(new MemoryOffset(4));
             }
             set
             {
-                _propsAccessor.WriteInt(value, 4);
+                _propsAccessor.WriteInt(value, new MemoryOffset(4));
             }
         }
 
@@ -67,11 +67,11 @@ namespace Xrpa
         {
             get
             {
-                return _propsAccessor.ReadInt(8);
+                return _propsAccessor.ReadInt(new MemoryOffset(8));
             }
             set
             {
-                _propsAccessor.WriteInt(value, 8);
+                _propsAccessor.WriteInt(value, new MemoryOffset(8));
             }
         }
 
@@ -79,11 +79,11 @@ namespace Xrpa
         {
             get
             {
-                return _propsAccessor.ReadInt(12);
+                return _propsAccessor.ReadInt(new MemoryOffset(12));
             }
             set
             {
-                _propsAccessor.WriteInt(value, 12);
+                _propsAccessor.WriteInt(value, new MemoryOffset(12));
             }
         }
 
@@ -91,11 +91,11 @@ namespace Xrpa
         {
             get
             {
-                return _propsAccessor.ReadInt(16);
+                return _propsAccessor.ReadInt(new MemoryOffset(16));
             }
             set
             {
-                _propsAccessor.WriteInt(value, 16);
+                _propsAccessor.WriteInt(value, new MemoryOffset(16));
             }
         }
 
@@ -103,11 +103,11 @@ namespace Xrpa
         {
             get
             {
-                return _propsAccessor.ReadInt(20);
+                return _propsAccessor.ReadInt(new MemoryOffset(20));
             }
             set
             {
-                _propsAccessor.WriteInt(value, 20);
+                _propsAccessor.WriteInt(value, new MemoryOffset(20));
             }
         }
 
@@ -240,12 +240,12 @@ namespace Xrpa
         private void SetElementSize(int offset, int numBytes)
         {
             XrpaUtils.DebugAssert(numBytes > 0);
-            _poolAccessor.WriteInt(numBytes, offset);
+            _poolAccessor.WriteInt(numBytes, new MemoryOffset(offset));
         }
 
         private int GetElementSize(int offset)
         {
-            int numBytes = _poolAccessor.ReadInt(offset);
+            int numBytes = _poolAccessor.ReadInt(new MemoryOffset(offset));
             XrpaUtils.DebugAssert(numBytes > 0);
             return numBytes;
         }

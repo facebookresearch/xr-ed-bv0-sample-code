@@ -22,26 +22,9 @@ using SensoryStimulusDataStore;
 using UnityEngine;
 
 [AddComponentMenu("")]
-public class StimulusComponent : MonoBehaviour {
-  private SensoryStimulusDataStore.Pose _Pose = new SensoryStimulusDataStore.Pose{position = new UnityEngine.Vector3{x = 0f, y = 0f, z = 0f}, orientation = new UnityEngine.Quaternion{x = 0f, y = 0f, z = 0f, w = 1f}};
-
-  public SensoryStimulusDataStore.Pose Pose {
-    get => _Pose;
-  }
-
-  private float _VisualDelay = 1f;
-
-  public float VisualDelay {
-    get => _VisualDelay;
-  }
-
-  private float _AudioDelay = 1f;
-
-  public float AudioDelay {
-    get => _AudioDelay;
-  }
-
-  private SensoryStimulusDataStore.ReconciledStimulus _xrpaObject;
+public class PsychoPyWindowComponent : MonoBehaviour {
+  public event System.Action<ulong, SensoryStimulusDataStore.Image> OnDisplay;
+  private SensoryStimulusDataStore.ReconciledPsychoPyWindow _xrpaObject;
   protected bool _dsIsInitialized = false;
 
   void Start() {
@@ -53,28 +36,18 @@ public class StimulusComponent : MonoBehaviour {
   }
 
   public void HandleXrpaFieldsChanged(ulong fieldsChanged) {
-    if (_xrpaObject.CheckPoseChanged(fieldsChanged)) {
-      _Pose = _xrpaObject.GetPose();
-      transform.localPosition = Pose.position;
-      transform.localRotation = Pose.orientation;
-    }
-    if (_xrpaObject.CheckVisualDelayChanged(fieldsChanged)) {
-      _VisualDelay = _xrpaObject.GetVisualDelay();
-    }
-    if (_xrpaObject.CheckAudioDelayChanged(fieldsChanged)) {
-      _AudioDelay = _xrpaObject.GetAudioDelay();
-    }
   }
 
-  public void SendUserResponse() {
-    _xrpaObject.SendUserResponse();
+  void DispatchDisplay(ulong timestamp, SensoryStimulusDataStore.DisplayReader message) {
+    OnDisplay?.Invoke(timestamp, message.GetImage());
   }
 
-  public void SetXrpaObject(SensoryStimulusDataStore.ReconciledStimulus obj) {
+  public void SetXrpaObject(SensoryStimulusDataStore.ReconciledPsychoPyWindow obj) {
     _xrpaObject = obj;
     _xrpaObject.SetXrpaOwner(this);
     _xrpaObject.OnXrpaFieldsChanged(HandleXrpaFieldsChanged);
-    HandleXrpaFieldsChanged(7);
+    HandleXrpaFieldsChanged(0);
+    _xrpaObject.OnDisplay(DispatchDisplay);
     _xrpaObject.OnXrpaDelete(HandleXrpaDelete);
   }
 
@@ -90,9 +63,6 @@ public class StimulusComponent : MonoBehaviour {
       return;
     }
     _dsIsInitialized = true;
-
-    _VisualDelay = 1f;
-    _AudioDelay = 1f;
   }
 
   void DeinitializeDS() {

@@ -223,21 +223,29 @@
     "@typescript-eslint/types" "5.62.0"
     eslint-visitor-keys "^3.3.0"
 
-"@xrpa/xrpa-orchestrator@^1.6.1":
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/@xrpa/xrpa-orchestrator/-/xrpa-orchestrator-1.6.1.tgz#64db346c09016e2c6e0277e64c64945154d101ec"
-  integrity sha512-aqPx+M9t+gd0bu4d/UZUapFmV3p5YvWHaftC+iBGqObDKmSSrnvRVyngXevgKyAo3s8/btZ7Un4toZnsrtZ03g==
+"@xrpa/xrpa-file-utils@1.8.0":
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/@xrpa/xrpa-file-utils/-/xrpa-file-utils-1.8.0.tgz#b1d913d16c7f0628477ed9a5fdc58dedd6f0d57e"
+  integrity sha512-0hRvbVkTMpdTGpraOYYAV39ecXOJjrS1iSy+A9Q2U2AW/6MZ46LRrL0/T/GQDV2R2eQPoCjMiBMXXvY+2/OMWA==
   dependencies:
-    "@xrpa/xrpa-utils" "1.6.1"
+    "@xrpa/xrpa-utils" "1.8.0"
+    fs-extra "^11.1.0"
+
+"@xrpa/xrpa-orchestrator@^1.8.0":
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/@xrpa/xrpa-orchestrator/-/xrpa-orchestrator-1.8.0.tgz#7f5d458d1b890c6e53120ad3c880e1edf0f47b66"
+  integrity sha512-mK7fSPowln6QT7NUXkD7VJFwgs63AzqapIK+2KTSp+lX9LB+AkWeamLuig9PMl8mmiN/pOqvfGVsBofvQibSXw==
+  dependencies:
+    "@xrpa/xrpa-file-utils" "1.8.0"
+    "@xrpa/xrpa-utils" "1.8.0"
     fs-extra "^11.1.0"
     simply-immutable "^2.1.1"
 
-"@xrpa/xrpa-utils@1.6.1":
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/@xrpa/xrpa-utils/-/xrpa-utils-1.6.1.tgz#eeb70292ca9ab874604096a0f98834289e99227e"
-  integrity sha512-/yFS3ae9MVvwgE01fVdMsI1x2MUX/RD3O8Ckgz/b8o/M6Z25quJrXdjYm/43AXflBotDZXvutgZMpT0zsqfteQ==
+"@xrpa/xrpa-utils@1.8.0":
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/@xrpa/xrpa-utils/-/xrpa-utils-1.8.0.tgz#86e2599e354ac9c20c66f92b10f54551331bc205"
+  integrity sha512-smH6rnxqiftthGTV4sCXXAk85JZREQDMW61bbpPSCnRDRIx/RNjBInN8GmY3M11TuNXZ1rPNoVM8OnXgTfzkZQ==
   dependencies:
-    fs-extra "^11.1.0"
     simply-immutable "^2.1.1"
 
 acorn-jsx@^5.3.2:

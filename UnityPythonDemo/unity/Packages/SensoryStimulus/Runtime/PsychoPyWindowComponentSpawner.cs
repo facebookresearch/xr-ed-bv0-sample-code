@@ -20,17 +20,17 @@ using SensoryStimulusDataStore;
 using UnityEngine;
 using Xrpa;
 
-public class StimulusComponentSpawner : MonoBehaviour {
+public class PsychoPyWindowComponentSpawner : MonoBehaviour {
   public GameObject entityPrefab;
 
-  private static StimulusComponentSpawner _Instance;
+  private static PsychoPyWindowComponentSpawner _Instance;
 
-  public static StimulusComponentSpawner Instance { get => _Instance; }
+  public static PsychoPyWindowComponentSpawner Instance { get => _Instance; }
 
   void Awake() {
     if (_Instance == null) {
       _Instance = this;
-      SensoryStimulusDataStoreSubsystem.Instance.DataStore.Stimulus.SetCreateDelegate(StimulusComponentSpawner.Spawn);
+      SensoryStimulusDataStoreSubsystem.Instance.DataStore.PsychoPyWindow.SetCreateDelegate(PsychoPyWindowComponentSpawner.Spawn);
     } else if (_Instance != this) {
       Destroy(gameObject);
     }
@@ -42,21 +42,21 @@ public class StimulusComponentSpawner : MonoBehaviour {
     }
   }
 
-  private static SensoryStimulusDataStore.ReconciledStimulus Spawn(
+  private static SensoryStimulusDataStore.ReconciledPsychoPyWindow Spawn(
       Xrpa.ObjectUuid id,
-      SensoryStimulusDataStore.StimulusReader remoteValue,
+      SensoryStimulusDataStore.PsychoPyWindowReader remoteValue,
       Xrpa.IObjectCollection collection) {
     GameObject go = null;
     if (_Instance?.entityPrefab) {
       go = Instantiate(_Instance.entityPrefab);
     } else {
-      go = new GameObject("SpawnedStimulusComponent");
+      go = new GameObject("SpawnedPsychoPyWindowComponent");
     }
-    var comp = go.GetComponent<StimulusComponent>();
+    var comp = go.GetComponent<PsychoPyWindowComponent>();
     if (comp == null) {
-      comp = go.AddComponent<StimulusComponent>();
+      comp = go.AddComponent<PsychoPyWindowComponent>();
     }
-    var obj = SensoryStimulusDataStore.ReconciledStimulus.Create(id, remoteValue, collection);
+    var obj = SensoryStimulusDataStore.ReconciledPsychoPyWindow.Create(id, remoteValue, collection);
     comp.SetXrpaObject(obj);
     return obj;
   }

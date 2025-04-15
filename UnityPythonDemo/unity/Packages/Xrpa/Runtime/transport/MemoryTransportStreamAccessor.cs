@@ -37,11 +37,11 @@ namespace Xrpa
         {
             get
             {
-                return _memAccessor.ReadInt(0);
+                return _memAccessor.ReadInt(new MemoryOffset(0));
             }
             set
             {
-                _memAccessor.WriteInt(value, 0);
+                _memAccessor.WriteInt(value, new MemoryOffset(0));
             }
         }
 
@@ -49,11 +49,11 @@ namespace Xrpa
         {
             get
             {
-                return _memAccessor.ReadInt(4);
+                return _memAccessor.ReadInt(new MemoryOffset(4));
             }
             set
             {
-                _memAccessor.WriteInt(value, 4);
+                _memAccessor.WriteInt(value, new MemoryOffset(4));
             }
         }
 
@@ -61,11 +61,11 @@ namespace Xrpa
         {
             get
             {
-                return HashValue.ReadValue(_memAccessor, 8);
+                return HashValue.ReadValue(_memAccessor, new MemoryOffset(8));
             }
             set
             {
-                HashValue.WriteValue(value, _memAccessor, 8);
+                HashValue.WriteValue(value, _memAccessor, new MemoryOffset(8));
             }
         }
 
@@ -76,11 +76,11 @@ namespace Xrpa
         {
             get
             {
-                return _memAccessor.ReadUlong(40);
+                return _memAccessor.ReadUlong(new MemoryOffset(40));
             }
             set
             {
-                _memAccessor.WriteUlong(value, 40);
+                _memAccessor.WriteUlong(value, new MemoryOffset(40));
             }
         }
 
@@ -90,11 +90,11 @@ namespace Xrpa
         {
             get
             {
-                return _memAccessor.ReadInt(48);
+                return _memAccessor.ReadInt(new MemoryOffset(48));
             }
             set
             {
-                _memAccessor.WriteInt(value, 48);
+                _memAccessor.WriteInt(value, new MemoryOffset(48));
             }
         }
 

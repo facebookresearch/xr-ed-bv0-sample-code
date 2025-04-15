@@ -15,11 +15,28 @@
 # @generated
 
 import dataclasses
+import enum
 import xrpa_runtime.utils.memory_accessor
 import xrpa_runtime.utils.xrpa_types
 
 class sensory_stimulus_data_store_config:
-  transport_config = xrpa_runtime.utils.xrpa_types.TransportConfig(xrpa_runtime.utils.xrpa_types.HashValue(0xca3eb487614d2465, 0xb66cd98da96fe6ff, 0x9bb9f8e39e1365c7, 0xb2a7d062da38976d), 61952)
+  transport_config = xrpa_runtime.utils.xrpa_types.TransportConfig(xrpa_runtime.utils.xrpa_types.HashValue(0x5c95c9c23ce14d61, 0x452966073cfc52ca, 0x9c767f4025d0c625, 0xe977f1d7fb58761b), 17313504)
+
+class ImageFormat(enum.Enum):
+  RGB8 = 0
+  BGR8 = 1
+  RGBA8 = 2
+  Y8 = 3
+
+class ImageEncoding(enum.Enum):
+  Raw = 0
+  Jpeg = 1
+
+class ImageOrientation(enum.Enum):
+  Oriented = 0
+  RotatedCW = 1
+  RotatedCCW = 2
+  Rotated180 = 3
 
 @dataclasses.dataclass
 class Vector3:
@@ -40,57 +57,112 @@ class Pose:
   orientation: Quaternion
 
 @dataclasses.dataclass
+class Image:
+
+  # Image width
+  width: int
+
+  # Image height
+  height: int
+  format: ImageFormat
+  encoding: ImageEncoding
+  orientation: ImageOrientation
+
+  # Image gain
+  gain: float
+
+  # Image exposure duration, if available
+  exposureDuration: int
+
+  # Capture timestamp, if available
+  timestamp: int
+
+  # Image data
+  data: bytearray
+
+@dataclasses.dataclass
 class DSVector3:
   @staticmethod
-  def read_value(mem_accessor: xrpa_runtime.utils.memory_accessor.MemoryAccessor, offset: int) -> Vector3:
-    x = mem_accessor.read_float(offset + 0)
-    y = mem_accessor.read_float(offset + 4)
-    z = mem_accessor.read_float(offset + 8)
+  def read_value(mem_accessor: xrpa_runtime.utils.memory_accessor.MemoryAccessor, offset: xrpa_runtime.utils.memory_accessor.MemoryOffset) -> Vector3:
+    x = mem_accessor.read_float(offset)
+    y = mem_accessor.read_float(offset)
+    z = mem_accessor.read_float(offset)
     return Vector3(x, y, -z)
 
   @staticmethod
-  def write_value(val: Vector3, mem_accessor: xrpa_runtime.utils.memory_accessor.MemoryAccessor, offset: int) -> None:
-    mem_accessor.write_float(val.x, offset + 0)
-    mem_accessor.write_float(val.y, offset + 4)
-    mem_accessor.write_float(-val.z, offset + 8)
+  def write_value(val: Vector3, mem_accessor: xrpa_runtime.utils.memory_accessor.MemoryAccessor, offset: xrpa_runtime.utils.memory_accessor.MemoryOffset) -> None:
+    mem_accessor.write_float(val.x, offset)
+    mem_accessor.write_float(val.y, offset)
+    mem_accessor.write_float(-val.z, offset)
 
 @dataclasses.dataclass
 class DSQuaternion:
   @staticmethod
-  def read_value(mem_accessor: xrpa_runtime.utils.memory_accessor.MemoryAccessor, offset: int) -> Quaternion:
-    x = mem_accessor.read_float(offset + 0)
-    y = mem_accessor.read_float(offset + 4)
-    z = mem_accessor.read_float(offset + 8)
-    w = mem_accessor.read_float(offset + 12)
+  def read_value(mem_accessor: xrpa_runtime.utils.memory_accessor.MemoryAccessor, offset: xrpa_runtime.utils.memory_accessor.MemoryOffset) -> Quaternion:
+    x = mem_accessor.read_float(offset)
+    y = mem_accessor.read_float(offset)
+    z = mem_accessor.read_float(offset)
+    w = mem_accessor.read_float(offset)
     return Quaternion(-x, -y, z, w)
 
   @staticmethod
-  def write_value(val: Quaternion, mem_accessor: xrpa_runtime.utils.memory_accessor.MemoryAccessor, offset: int) -> None:
-    mem_accessor.write_float(-val.x, offset + 0)
-    mem_accessor.write_float(-val.y, offset + 4)
-    mem_accessor.write_float(val.z, offset + 8)
-    mem_accessor.write_float(val.w, offset + 12)
+  def write_value(val: Quaternion, mem_accessor: xrpa_runtime.utils.memory_accessor.MemoryAccessor, offset: xrpa_runtime.utils.memory_accessor.MemoryOffset) -> None:
+    mem_accessor.write_float(-val.x, offset)
+    mem_accessor.write_float(-val.y, offset)
+    mem_accessor.write_float(val.z, offset)
+    mem_accessor.write_float(val.w, offset)
 
 @dataclasses.dataclass
 class DSPose:
   @staticmethod
-  def read_value(mem_accessor: xrpa_runtime.utils.memory_accessor.MemoryAccessor, offset: int) -> Pose:
-    position = DSVector3.read_value(mem_accessor, offset + 0)
-    orientation = DSQuaternion.read_value(mem_accessor, offset + 12)
+  def read_value(mem_accessor: xrpa_runtime.utils.memory_accessor.MemoryAccessor, offset: xrpa_runtime.utils.memory_accessor.MemoryOffset) -> Pose:
+    position = DSVector3.read_value(mem_accessor, offset)
+    orientation = DSQuaternion.read_value(mem_accessor, offset)
     return Pose(position, orientation)
 
   @staticmethod
-  def write_value(val: Pose, mem_accessor: xrpa_runtime.utils.memory_accessor.MemoryAccessor, offset: int) -> None:
-    DSVector3.write_value(val.position, mem_accessor, offset + 0)
-    DSQuaternion.write_value(val.orientation, mem_accessor, offset + 12)
+  def write_value(val: Pose, mem_accessor: xrpa_runtime.utils.memory_accessor.MemoryAccessor, offset: xrpa_runtime.utils.memory_accessor.MemoryOffset) -> None:
+    DSVector3.write_value(val.position, mem_accessor, offset)
+    DSQuaternion.write_value(val.orientation, mem_accessor, offset)
 
 @dataclasses.dataclass
 class DSScalar:
   @staticmethod
-  def read_value(mem_accessor: xrpa_runtime.utils.memory_accessor.MemoryAccessor, offset: int) -> float:
-    value = mem_accessor.read_float(offset + 0)
+  def read_value(mem_accessor: xrpa_runtime.utils.memory_accessor.MemoryAccessor, offset: xrpa_runtime.utils.memory_accessor.MemoryOffset) -> float:
+    value = mem_accessor.read_float(offset)
     return value
 
   @staticmethod
-  def write_value(val: float, mem_accessor: xrpa_runtime.utils.memory_accessor.MemoryAccessor, offset: int) -> None:
-    mem_accessor.write_float(val, offset + 0)
+  def write_value(val: float, mem_accessor: xrpa_runtime.utils.memory_accessor.MemoryAccessor, offset: xrpa_runtime.utils.memory_accessor.MemoryOffset) -> None:
+    mem_accessor.write_float(val, offset)
+
+@dataclasses.dataclass
+class DSImage:
+  @staticmethod
+  def read_value(mem_accessor: xrpa_runtime.utils.memory_accessor.MemoryAccessor, offset: xrpa_runtime.utils.memory_accessor.MemoryOffset) -> Image:
+    width = mem_accessor.read_int(offset)
+    height = mem_accessor.read_int(offset)
+    format = mem_accessor.read_int(offset)
+    encoding = mem_accessor.read_int(offset)
+    orientation = mem_accessor.read_int(offset)
+    gain = DSScalar.read_value(mem_accessor, offset)
+    exposureDuration = mem_accessor.read_ulong(offset)
+    timestamp = mem_accessor.read_ulong(offset)
+    data = mem_accessor.read_bytearray(offset)
+    return Image(width, height, ImageFormat(format), ImageEncoding(encoding), ImageOrientation(orientation), gain, exposureDuration, timestamp, data)
+
+  @staticmethod
+  def write_value(val: Image, mem_accessor: xrpa_runtime.utils.memory_accessor.MemoryAccessor, offset: xrpa_runtime.utils.memory_accessor.MemoryOffset) -> None:
+    mem_accessor.write_int(val.width, offset)
+    mem_accessor.write_int(val.height, offset)
+    mem_accessor.write_int(val.format.value, offset)
+    mem_accessor.write_int(val.encoding.value, offset)
+    mem_accessor.write_int(val.orientation.value, offset)
+    DSScalar.write_value(val.gain, mem_accessor, offset)
+    mem_accessor.write_ulong(val.exposureDuration, offset)
+    mem_accessor.write_ulong(val.timestamp, offset)
+    mem_accessor.write_bytearray(val.data, offset)
+
+  @staticmethod
+  def dyn_size_of_value(val: Image) -> int:
+    return xrpa_runtime.utils.memory_accessor.MemoryAccessor.dyn_size_of_bytearray(val.data)

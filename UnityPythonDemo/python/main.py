@@ -7,6 +7,8 @@ import random
 import sys
 import uuid
 
+from psychopy import visual
+from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import (
     QApplication,
     QHBoxLayout,
@@ -16,7 +18,7 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
     QWidget,
 )
-from xrpa.sensory_stimulus_data_store import OutboundStimulus
+from xrpa.sensory_stimulus_data_store import OutboundPsychoPyWindow, OutboundStimulus
 
 from xrpa.sensory_stimulus_types import Pose, Quaternion, Vector3
 from xrpa.unity_python_demo_application_interface import (
@@ -32,6 +34,7 @@ class MainWindow(QWidget):
         self._interface = UnityPythonDemoApplicationInterface()
 
         self.initUI()
+        self.initPsychoPy()
 
     def initUI(self):
         self.setGeometry(100, 100, 300, 150)
@@ -59,6 +62,7 @@ class MainWindow(QWidget):
         layout.addWidget(run_button)
 
     def closeEvent(self, event):
+        self._timer.stop()
         self._interface.shutdown()
         event.accept()
 
@@ -93,6 +97,42 @@ class MainWindow(QWidget):
             self._interface.sensory_stimulus_data_store.Stimulus.add_object(stimulus)
 
         self._interface.transact(create_stimulus)
+
+    def initPsychoPy(self):
+        self._win = visual.Window(size=(800, 600), color=[-1, -1, -1])
+        self._circle_stim = visual.Circle(
+            self._win, radius=0.2, pos=[-0.5, 0], lineColor=[1, 0, 0], fillColor=None
+        )
+        self._rect_stim = visual.Rect(
+            self._win,
+            width=0.4,
+            height=0.2,
+            pos=[0.5, 0],
+            lineColor=[0, 1, 0],
+            fillColor=None,
+        )
+
+        self._outbound_window = OutboundPsychoPyWindow(
+            ObjectUuid.from_uuid(uuid.uuid4())
+        )
+        self._interface.sensory_stimulus_data_store.PsychoPyWindow.add_object(
+            self._outbound_window
+        )
+        self._outbound_window.set_display_source(self._win)
+
+        self._showing_circle = True
+
+        self._timer = QTimer(self)
+        self._timer.timeout.connect(self.psychopy_flip)
+        self._timer.start(100)
+
+    def psychopy_flip(self):
+        if self._showing_circle:
+            self._circle_stim.draw()
+        else:
+            self._rect_stim.draw()
+        self._win.flip()
+        self._showing_circle = not self._showing_circle
 
 
 def main():

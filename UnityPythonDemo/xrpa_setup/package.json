@@ -18,6 +18,6 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
-    "@xrpa/xrpa-orchestrator": "^1.6.1"
+    "@xrpa/xrpa-orchestrator": "^1.8.0"
   }
 }

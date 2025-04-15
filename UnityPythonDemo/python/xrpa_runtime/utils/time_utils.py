@@ -20,3 +20,7 @@ class TimeUtils:
     @staticmethod
     def get_current_clock_time_microseconds() -> int:
         return int(time.time_ns() // 1000)
+
+    @staticmethod
+    def get_current_clock_time_nanoseconds() -> int:
+        return int(time.time_ns())

@@ -83,15 +83,6 @@ namespace Xrpa
         protected virtual void IndexNotifyUpdate(ReconciledType obj, ulong fieldsChanged) { }
         protected virtual void IndexNotifyDelete(ReconciledType obj) { }
 
-        protected virtual void BindingTick() { }
-        protected virtual void BindingWriteChanges(ObjectUuid id) { }
-        protected virtual void BindingProcessMessage(
-            ObjectUuid id,
-            int messageType,
-            int timestamp,
-            MemoryAccessor msgAccessor)
-        { }
-
         // these functions are for isLocalOwned=true derived classes; they typically will be exposed with
         // public wrapper functions
         protected void AddObjectInternal(ReconciledType obj)
@@ -153,11 +144,6 @@ namespace Xrpa
 
         public override void Tick()
         {
-            if (_indexedFieldMask != 0)
-            {
-                BindingTick();
-            }
-
             foreach (var obj in _objects)
             {
                 obj.Value.TickXrpa();
@@ -168,10 +154,6 @@ namespace Xrpa
         {
             if (_objects.TryGetValue(id, out ReconciledType obj))
             {
-                if (_indexedFieldMask != 0)
-                {
-                    BindingWriteChanges(id);
-                }
                 obj.WriteDSChanges(accessor);
             }
             else if (_isLocalOwned)
@@ -280,7 +262,7 @@ namespace Xrpa
                 IndexNotifyDelete(obj);
             }
 
-            obj.ProcessDSDelete();
+            obj.HandleXrpaDelete();
 
             _objects.Remove(id);
         }
@@ -288,7 +270,7 @@ namespace Xrpa
         public override void ProcessMessage(
             ObjectUuid id,
             int messageType,
-            int timestamp,
+            ulong timestamp,
             MemoryAccessor msgAccessor)
         {
             if (!_objects.TryGetValue(id, out ReconciledType obj))
@@ -297,11 +279,6 @@ namespace Xrpa
             }
 
             obj.ProcessDSMessage(messageType, timestamp, msgAccessor);
-
-            if (_indexedFieldMask != 0)
-            {
-                BindingProcessMessage(id, messageType, timestamp, msgAccessor);
-            }
         }
 
         public override void ProcessUpsert(ObjectUuid id, MemoryAccessor memAccessor)
