@@ -1,0 +1,9 @@
+{
+  "name": "com.xred.audioinput",
+  "version": "1.14.0",
+  "displayName": "AudioInput",
+  "description": "AudioInput Bindings",
+  "dependencies": {
+    "com.meta.xrpa": "1.0.0"
+  }
+}

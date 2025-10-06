@@ -1,0 +1,9 @@
+{
+  "name": "com.xred.smartcontroller",
+  "version": "1.14.0",
+  "displayName": "SmartController",
+  "description": "SmartController Bindings",
+  "dependencies": {
+    "com.meta.xrpa": "1.0.0"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "com.xred.opticalcharacterrecognition",
+  "version": "1.14.0",
+  "displayName": "OpticalCharacterRecognition",
+  "description": "OpticalCharacterRecognition Bindings",
+  "dependencies": {
+    "com.meta.xrpa": "1.0.0"
+  }
+}

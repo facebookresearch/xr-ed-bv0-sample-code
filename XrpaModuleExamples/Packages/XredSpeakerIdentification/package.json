@@ -1,0 +1,9 @@
+{
+  "name": "com.xred.speakeridentification",
+  "version": "1.14.0",
+  "displayName": "SpeakerIdentification",
+  "description": "SpeakerIdentification Bindings",
+  "dependencies": {
+    "com.meta.xrpa": "1.0.0"
+  }
+}

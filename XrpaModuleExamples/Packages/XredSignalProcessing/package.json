@@ -1,0 +1,9 @@
+{
+  "name": "com.xred.signalprocessing",
+  "version": "1.14.0",
+  "displayName": "SignalProcessing",
+  "description": "SignalProcessing Bindings",
+  "dependencies": {
+    "com.meta.xrpa": "1.0.0"
+  }
+}

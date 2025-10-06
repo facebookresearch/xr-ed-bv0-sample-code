@@ -1,0 +1,9 @@
+{
+  "name": "com.xred.llmhub",
+  "version": "1.14.0",
+  "displayName": "LlmHub",
+  "description": "LlmHub Bindings",
+  "dependencies": {
+    "com.meta.xrpa": "1.0.0"
+  }
+}

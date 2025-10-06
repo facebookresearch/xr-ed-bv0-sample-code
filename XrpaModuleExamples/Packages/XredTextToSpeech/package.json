@@ -1,0 +1,9 @@
+{
+  "name": "com.xred.texttospeech",
+  "version": "1.14.0",
+  "displayName": "TextToSpeech",
+  "description": "TextToSpeech Bindings",
+  "dependencies": {
+    "com.meta.xrpa": "1.0.0"
+  }
+}
