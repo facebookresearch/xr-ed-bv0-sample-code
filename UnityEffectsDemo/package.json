@@ -23,5 +23,8 @@
     "@xrpa/xred-signal-output": "^1.4.0",
     "@xrpa/xred-signal-processing": "^1.4.0",
     "@xrpa/xrpa-orchestrator": "^1.4.0"
+  },
+  "resolutions": {
+    "js-yaml": "4.1.1"
   }
 }
