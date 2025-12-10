@@ -1,0 +1,9 @@
+{
+  "name": "com.xred.eyetracking",
+  "version": "1.15.0",
+  "displayName": "EyeTracking",
+  "description": "EyeTracking Bindings",
+  "dependencies": {
+    "com.meta.xrpa": "1.0.0"
+  }
+}

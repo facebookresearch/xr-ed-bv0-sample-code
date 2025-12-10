@@ -1,0 +1,30 @@
+{
+  "name": "eye-tracking-demo",
+  "version": "1.0.0",
+  "description": "EyeTracking Xrpa Demo",
+  "main": "js/index.ts",
+  "private": true,
+  "scripts": {
+    "postinstall": "ts-node ./js/index.ts",
+    "update": "ts-node ./js/index.ts",
+    "codegen": "ts-node ./js/index.ts",
+    "watch": "nodemon --watch js --ext ts --exec 'yarn codegen'",
+    "lint": "eslint --ext .ts,.tsx ./src",
+    "EyeTracking": "bin/PupilNeon.exe",
+    "EyeTracking-mac": "bin/PupilNeon"
+  },
+  "devDependencies": {
+    "@types/node": "18.11.18",
+    "@typescript-eslint/eslint-plugin": "^5.57.0",
+    "@typescript-eslint/parser": "^5.57.0",
+    "eslint": "8.32.0",
+    "eslint-plugin-import": "^2.27.5",
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "@xrpa/xred-eye-tracking": "^1.15.0",
+    "@xrpa/xrpa-orchestrator": "^1.15.0"
+  }
+}
