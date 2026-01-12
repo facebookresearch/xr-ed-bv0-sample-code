@@ -7,7 +7,6 @@ import asyncio
 import logging
 import sys
 import threading
-
 from itertools import count, takewhile
 from typing import Iterator
 
@@ -16,7 +15,6 @@ from bleak.backends.characteristic import BleakGATTCharacteristic
 from bleak.backends.device import BLEDevice
 from bleak.backends.scanner import AdvertisementData
 from bleak.backends.winrt.client import logger as bleak_log
-
 from PySide6.QtCore import Qt, Signal, Slot
 from PySide6.QtWidgets import (
     QApplication,

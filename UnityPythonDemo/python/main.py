@@ -19,7 +19,6 @@ from PyQt5.QtWidgets import (
     QWidget,
 )
 from xrpa.sensory_stimulus_data_store import OutboundPsychoPyWindow, OutboundStimulus
-
 from xrpa.sensory_stimulus_types import Pose, Quaternion, Vector3
 from xrpa.unity_python_demo_application_interface import (
     UnityPythonDemoApplicationInterface,
