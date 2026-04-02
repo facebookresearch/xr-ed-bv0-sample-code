@@ -26,5 +26,8 @@
   "dependencies": {
     "@xrpa/xred-eye-tracking": "^1.15.0",
     "@xrpa/xrpa-orchestrator": "^1.15.0"
+  },
+  "resolutions": {
+    "minimatch": ">=3.1.3"
   }
 }
